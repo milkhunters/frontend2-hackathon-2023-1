@@ -8,8 +8,6 @@ const unreadMessageCount = useUnreadMessageCount();
 
 <template>
   <div>
-    <!-- {{ user }} -->
-    <br />
-    {{ unreadMessageCount }}
+
   </div>
 </template>
