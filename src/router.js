@@ -18,7 +18,7 @@ const router = createRouter({
       component: LoginPage,
     },
     {
-      path: "/profile",
+      path: "/profile/:id?",
       name: "profile",
       component: ProfilePage,
     },
