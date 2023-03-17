@@ -1,5 +1,5 @@
 ARG MODE=production
-FROM node:12-alpine as build
+FROM node:18.15.0-alpine3.17 as build
 
 
 ARG MODE
