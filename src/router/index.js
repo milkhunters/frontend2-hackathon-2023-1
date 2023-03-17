@@ -3,6 +3,7 @@ import HomePage from "@/pages/HomePage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import RegistrationPage from "@/pages/RegistrationPage.vue";
 import RegistrationSuccessPage from "@/pages/RegistrationSuccessPage.vue";
+import ProfilePage from "@/pages/ProfilePage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: "/registration-success",
       name: "registration-success",
       component: RegistrationSuccessPage,
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: ProfilePage,
     },
   ],
 });

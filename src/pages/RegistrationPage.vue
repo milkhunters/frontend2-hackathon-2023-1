@@ -2,23 +2,29 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import SignForm from "@/components/SignForm.vue";
-import { signUp } from "@/lib/api/register.js";
+import { signUp } from "@/lib/api/auth/register.js";
 import useFormError from "@/composables/useFormError";
 
 const username = ref("");
+const email = ref("");
 const password = ref("");
 
-const errorMessage = useFormError([username, password]);
+const errorMessage = useFormError([username, email, password]);
 const router = useRouter();
 
+const formatError = (errors) => {
+  return errors.map(({ message }) => message).join("\n");
+};
+
 const trySignUp = async () => {
-  const error = await signUp({
+  const errors = await signUp({
     username: username.value,
+    email: email.value,
     password: password.value,
   });
 
-  if (error) {
-    errorMessage.value = error;
+  if (errors) {
+    errorMessage.value = Array.isArray(errors) ? formatError(errors) : errors;
   } else {
     router.push({ name: "registration-success" });
   }
@@ -39,7 +45,7 @@ const trySignUp = async () => {
 
     <label>
       <p>E-mail</p>
-      <input type="email" />
+      <input v-model="email" type="email" />
     </label>
 
     <label>

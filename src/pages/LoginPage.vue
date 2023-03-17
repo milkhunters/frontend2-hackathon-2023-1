@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import SignForm from "@/components/SignForm.vue";
-import { signIn } from "@/lib/api/login";
+import { signIn } from "@/lib/api/auth/login";
 import useFormError from "@/composables/useFormError";
 
 const username = ref("");
@@ -20,7 +20,7 @@ const trySignIn = async () => {
   if (error) {
     errorMessage.value = "Пользователь не найден!";
   } else {
-    router.push({ name: "home" });
+    router.push({ name: "profile" });
   }
 };
 </script>

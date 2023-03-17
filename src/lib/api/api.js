@@ -1,47 +1,50 @@
 const API_BASE_URL = "https://hack.milkhunters.ru/api/v1";
 
 const processApiResponse = (response) => {
-  // const errorHappend = response.status !== 200 || response.data !== null;
-  return ["error", null];
-
-  // return errorHappend
-  //   ? [response.data.error.message, null]
-  //   : [null, response.data];
+  const errorHappend = response.error?.type === 2 || response.error?.type === 1 && response.message === null;
+  console.log(response);
+  return errorHappend
+    ? [response.error.content, null]
+    : [null, response.message];
 };
 
-export const makePostRequest = async (apiUrl, body) => {
+export const makeRequest = async (apiUrl, record, method = "POST") => {
   const fullUrl = `${API_BASE_URL}/${apiUrl}`;
+  const headers = record ? { "Content-Type": "application/json" } : undefined;
+  const body = record ? JSON.stringify(record) : record;
 
   try {
     const response = await fetch(fullUrl, {
-      method: "POST",
+      method,
+      headers,
+      body,
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
     });
 
-    return processApiResponse(response);
+    const data = await response.json();
+    return processApiResponse(data);
   } catch (error) {
     console.error(error);
     return [error, null];
   }
 };
 
-const buildUrl = (apiUrl, body) => {
+const buildUrl = (apiUrl, record = {}) => {
   const url = new URL(`${API_BASE_URL}/${apiUrl}`);
-  Object.entries(body).forEach(([field, value]) => url.searchParams.set(field, value));
+  Object.entries(record).forEach(([field, value]) => url.searchParams.set(field, value));
   return url;
 };
 
-export const makeGetRequest = async (apiUrl, body) => {
-  const url = buildUrl(apiUrl, body);
+export const makeGetRequest = async (apiUrl, record) => {
+  const url = buildUrl(apiUrl, record);
   try {
     const response = await fetch(url, {
       method: "GET",
       credentials: "include",
     });
     
-    return processApiResponse(response);
+    const data = await response.json();
+    return processApiResponse(data);
   } catch (error) {
     console.error(error);
     return [error, null];
