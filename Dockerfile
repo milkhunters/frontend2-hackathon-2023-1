@@ -11,10 +11,10 @@ WORKDIR /app
 #RUN npm ci
 
 COPY . /app
-RUN npm ci
+RUN npm install
 
 ENV NODE_ENV $MODE
-RUN npm run build -- --mode $MODE
+RUN npm run build # -- --mode $#MODE
 
 
 FROM nginx:1.16.0-alpine
