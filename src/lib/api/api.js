@@ -1,9 +1,7 @@
 const API_BASE_URL = "https://hack.milkhunters.ru/api/v1";
 
 const processApiResponse = (response) => {
-  const errorHappend = response.error?.type === 2 || response.error?.type === 1 && response.message === null;
-  console.log(response);
-  return errorHappend
+  return response.error
     ? [response.error.content, null]
     : [null, response.message];
 };
