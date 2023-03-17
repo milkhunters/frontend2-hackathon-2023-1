@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import { signOut } from "@/lib/api/auth/login.js";
 import { getCurrentUserProfileInfo } from "@/lib/api/user/profile.js";
-import { routeLocationKey, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const user = ref(null);
 
@@ -24,10 +24,12 @@ const trySignOut = async () => {
 </script>
 
 <template>
-  <div v-if="user">
-    UserPage
-    <div>Email - {{ user.email }}</div>
-    <div>Name - {{ user.username }}</div>
-    <button @click="trySignOut">Выйти</button>
-  </div>
+  <default-layout>
+    <div v-if="user">
+      UserPage
+      <div>Email - {{ user.email }}</div>
+      <div>Name - {{ user.username }}</div>
+      <button @click="trySignOut">Выйти</button>
+    </div>
+  </default-layout>
 </template>
