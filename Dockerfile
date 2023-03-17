@@ -6,11 +6,13 @@ ARG MODE
 
 WORKDIR /app
 
-COPY package.json /app/package.json
-COPY package-lock.json /app/package-lock.json
-RUN npm ci
+#COPY package.json /app/package.json
+#COPY package-lock.json /app/package-lock.json
+#RUN npm ci
 
 COPY . /app
+RUN npm ci
+
 ENV NODE_ENV $MODE
 RUN npm run build -- --mode $MODE
 
