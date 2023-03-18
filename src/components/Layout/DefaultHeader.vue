@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import useUserProfile from "@/composables/useUserProfile.js";
 import useSubscription from "@/composables/useSubscription.js";
 import { subscribeToMessageCount, unsubscribeFromMessageCount } from "@/lib/api/user/messages.js";
-import { userFullName } from "@/lib/api/user/profile.js";
+import { userFullName } from "@/lib/api/user/formatters.js";
 
 const user = useUserProfile();
 const unreadMessageCount = useSubscription(subscribeToMessageCount, unsubscribeFromMessageCount, 0);

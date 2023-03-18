@@ -43,6 +43,5 @@ export const findLinksInString = (string) => {
 };
 
 export const replaceLinksInString = (string, replacement) => {
-  console.log(string, replacement)
   return string.replaceAll(matchLinkRegExp, replacement);
 };

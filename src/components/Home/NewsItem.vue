@@ -1,21 +1,26 @@
 <script>
 export default {
   name: "NewsItem",
+
   props: {
-    news: {
-      type: Object
-    }
-  }
-}
+    title: {
+      type: String,
+      required: true,
+    },
+    body: {
+      type: String,
+      required: true,
+    },
+  },
+};
 </script>
 
 <template>
   <div class="newsItem">
-    <div> {{ news.title }}</div>
-    <div> {{ news.body }}</div>
+    <div>{{ title }}</div>
+    <div>{{ body }}</div>
   </div>
 </template>
-
 
 <style scoped>
 .newsItem {

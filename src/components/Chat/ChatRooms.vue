@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { getAllDialogs } from "@/lib/api/chat/dialog.js";
-import { roleDescription } from "@/lib/api/user/profile.js";
+import { roleDescription } from "@/lib/api/user/formatters.js";
 
 const emit = defineEmits({
   dialogSelected(dialogId) {

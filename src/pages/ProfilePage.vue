@@ -5,7 +5,8 @@ import useUserProfile from "@/composables/useUserProfile.js";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import ResetPasswordForm from "@/components/Profile/ResetPasswordForm.vue";
 import { signOut } from "@/lib/api/auth/login.js";
-import { getUserProfileInfo, roleDescription } from "@/lib/api/user/profile.js";
+import { roleDescription } from "@/lib/api/user/formatters.js";
+import { getUserProfileInfo } from "@/lib/api/user/profile.js";
 
 const route = useRoute();
 
