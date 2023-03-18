@@ -5,7 +5,6 @@ import CompanyNews from "@/components/Home/CompanyNews.vue";
 
 export default {
   name: "HomePage",
-
   components: { CompanyNews, ProductsBanner, DefaultLayout },
 };
 </script>

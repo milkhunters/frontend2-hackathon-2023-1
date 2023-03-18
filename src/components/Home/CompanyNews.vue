@@ -3,26 +3,32 @@ import NewsItem from "./NewsItem.vue";
 
 export default {
   name: "CompanyNews",
-
   components: { NewsItem },
-
   data() {
     return {
       newsCompany: [
         {
           id: 1,
-          title: "Новость дня - запукаем ракету!",
-          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto tempora, pariatur debitis eos natus dolor voluptatem consectetur minus est in molestiae sed similique magni maiores optio. Voluptatum aliquam maxime iusto dolore exercitationem porro excepturi quae, debitis dolores doloribus! Nam odit cum repellendus rem accusamus nisi voluptate a magnam sed? Dolorum.",
+          title: "Правила депортации космических коров",
+          body: "Если космический корабль вышел из под контроля, то следует попытаться посадить его на Землю, но если это невозможно, то нужно попытаться его уничтожить.\n" +
+              "\n" +
+              "Не выпускать коров из космолета до тех пор, пока они не будут доставлены на Землю.",
         },
         {
           id: 2,
-          title: "У нас миллион пользователей...",
-          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto tempora, pariatur debitis eos natus dolor voluptatem consectetur minus est in molestiae sed similique magni maiores optio. Voluptatum aliquam maxime iusto dolore exercitationem porro excepturi quae, debitis dolores doloribus! Nam odit cum repellendus rem accusamus nisi voluptate a magnam sed? Dolorum."
+          title: "Охота на коров",
+          body: "Группа охотников на коров отправляется на поиски стада во время засухи. Они оказываются в ловушке, так как коровы начинают их преследовать.\n" +
+              "\n" +
+              "Находясь на грани банкротства, владелец фермы вынужден продать все своё стадо и уехать в Нью-Йорк. Нежданно-негаданно он получает предложение продать корову по цене целого дома, и, конечно же, не задумываясь, соглашается. В итоге у него появляется целое стадо коров, которые стали причиной возникновения множества проблем."
         },
         {
           id: 3,
-          title: "Мы запускаем авторские курсы...",
-          body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto tempora, pariatur debitis eos natus dolor voluptatem consectetur minus est in molestiae sed similique magni maiores optio. Voluptatum aliquam maxime iusto dolore exercitationem porro excepturi quae, debitis dolores doloribus! Nam odit cum repellendus rem accusamus nisi voluptate a magnam sed? Dolorum."
+          title: "Отдел депортации коров египт",
+          body: "Во-первых, в Египте существует целая система депортаций коров из страны.\n" +
+              "Их вывозят на специальных кораблях, и в итоге в стране остается меньше животных, чем было до этого.\n" +
+              "В частности, это касается и Асуана, где находится крупнейшая в мире коллекция древних мумий.\n" +
+              "Здесь можно увидеть животных, которые являются потомками тех, что жили здесь во времена фараонов.\n" +
+              "Согласно египетским источникам, именно в Асуане было заложено основание египетской цивилизации."
         }
       ],
     };
@@ -36,11 +42,11 @@ export default {
       <div class="container">
         <h2 class="sec-title">Новости</h2>
         <div class="news_wrapper">
-          <!-- Новость -->
           <news-item v-for="news in newsCompany" :key="news.id" v-bind="news"/>
         </div>
       </div>
     </section>
+
 </template>
 
 <style scoped>

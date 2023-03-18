@@ -1,4 +1,4 @@
-<script setup>
+ <script setup>
 import { ref } from "vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import ChatRooms from "@/components/Chat/ChatRooms.vue";
