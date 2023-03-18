@@ -5,9 +5,9 @@ export default {
   data() {
     return {
       products: [
-        { id: 1, url: "https://i.imgur.com/Y3AnsBO.png" },
-        { id: 2, url: "https://i.imgur.com/3l95q2c.png" },
-        { id: 3, url: "https://i.imgur.com/XMwqK3E.png" }
+        { id: 1, url: "https://i.imgur.com/IVMd5RR.png" },
+        { id: 2, url: "https://i.imgur.com/7xyaMce.png" },
+        { id: 3, url: "https://i.imgur.com/kwFIUNS.png" }
       ],
       bannerProductId: 1,
       intervalID: null,
@@ -16,7 +16,7 @@ export default {
 
   methods: {
     startInterval() {
-      this.intervalID = setInterval(this.goAhead, 1000);
+      this.intervalID = setInterval(this.goAhead, 3000);
     },
     stopInterval() {
       clearInterval(this.intervalID);
