@@ -15,6 +15,11 @@ export default {
       type: String,
       required: true,
     },
+  },
+  methods: {
+    minBody(body) {
+      return body.slice(0, 80)
+    }
   }
 };
 </script>
@@ -23,7 +28,7 @@ export default {
 
   <div class="news" @click="isFull ? isFull = false : isFull = true">
     <h4 class="news_title">{{ title }}</h4>
-    <p class="news_desc">{{ body.split(" ").slice(0, 9).join(" ") }}...</p>
+    <p class="news_desc">{{ minBody(body) }}...</p>
   </div>
 
   <div v-if="isFull" class="news_big">

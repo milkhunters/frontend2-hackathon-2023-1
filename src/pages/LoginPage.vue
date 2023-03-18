@@ -27,12 +27,12 @@ const trySignIn = async () => {
   <sign-form title="Вход" :error="errorMessage">
     <label>
       <p>Логин</p>
-      <input v-model="email" class="form_input" type="text" />
+      <input v-model="email" class="form_input" type="text"/>
     </label>
 
     <label>
       <p class="log-pass">Пароль</p>
-      <input v-model="password" class="form_input" type="password" />
+      <input v-model="password" class="form_input" type="password"/>
     </label>
 
     <button @click.stop="trySignIn" class="form_btn">Авторизоваться</button>
@@ -40,5 +40,5 @@ const trySignIn = async () => {
 </template>
 
 <style scoped>
-@import "@/assets/sign-form.css";
+@import "@/assets/LoginStyles/sign-form.css";
 </style>
