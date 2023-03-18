@@ -1,9 +1,11 @@
-import { makeGetRequest } from "../api";
+import { makeReadRequest, processApiResponse } from "../api";
 
 const API_CURRENT_USER_URL = "user/current";
 
-export const getCurrentUserProfileInfo = () => {
-  return makeGetRequest(API_CURRENT_USER_URL);
+export const getCurrentUserProfileInfo = async () => {
+  const [error, response] = await makeReadRequest(API_CURRENT_USER_URL);
+  if (error) return [error, null];
+  return await response.json().then(processApiResponse);
 };
 
 export const getUserProfileInfo = async (userId) => {

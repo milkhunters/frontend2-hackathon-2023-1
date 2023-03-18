@@ -1,14 +1,12 @@
-import { makeRequest } from "../api.js";
+import { encodeJson, makeWriteRequest } from "../api.js";
 
 const API_SIGNIN_URL = "auth/signIn";
 const API_SIGNOUT_URL = "auth/logout";
 
 export const signIn = async (record) => {
-  const [error] = await makeRequest(API_SIGNIN_URL, record);
-  return error;
+  return await makeWriteRequest(API_SIGNIN_URL, encodeJson(record));
 };
 
 export const signOut = async () => {
-  const [error] = await makeRequest(API_SIGNOUT_URL);
-  return error;
+  return await makeWriteRequest(API_SIGNOUT_URL);
 };

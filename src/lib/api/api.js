@@ -1,45 +1,50 @@
 const API_BASE_URL = "https://hack.milkhunters.ru/api/v1";
 
 const formatResponse = (data) => {
-  // { some_useful_prop: 42 } -> { someUsefulProp: 42 }
-  
   const entries = Object.entries(data);
   const formattedEntries = entries.map(([key, value]) => {
     const [leave, ...toFormat] = key.split("_");
-    const formatted = toFormat
-      .map((part) => part[0].toUpperCase() + part.slice(1))
-      .join("");
+    const formatted = toFormat.map((part) => part[0].toUpperCase() + part.slice(1)).join("");
     return [leave + formatted, value];
   });
   return Object.fromEntries(formattedEntries);
 };
 
-const processApiResponse = (response) => {
-  return response.error
-    ? [response.error.content, null]
-    : [null, formatResponse(response.message)];
+export const processApiResponse = (response) => {
+  return response.error ? [response.error.content, null] : [null, formatResponse(response.message)];
 };
 
-export const makeRequest = async (apiUrl, record, method = "POST") => {
-  const fullUrl = `${API_BASE_URL}/${apiUrl}`;
-  const headers = record ? { "Content-Type": "application/json" } : undefined;
-  const body = record ? JSON.stringify(record) : record;
-
+const makeRequest = async (url, method, headers, body) => {
   try {
-    const response = await fetch(fullUrl, {
+    const response = await fetch(url, {
       method,
       headers,
       body,
       credentials: "include",
     });
-    
-    if (response.status === 204) return [null, null];
-    const data = await response.json();
-    return processApiResponse(data);
+    return [null, response];
   } catch (error) {
     console.error(error);
     return [error, null];
   }
+};
+
+export const encodeEmpty = () => {
+  return { headers: undefined, body: undefined };
+};
+
+export const encodeJson = (record) => {
+  return { headers: { "Content-Type": "application/json" }, body: JSON.stringify(record) };
+};
+
+export const encodeFile = (file) => {
+  return { headers: { "Content-Type": "application/base64" }, body: file };
+};
+
+export const makeWriteRequest = async (apiUrl, options = encodeEmpty(), method = "POST") => {
+  const url = `${API_BASE_URL}/${apiUrl}`;
+  const { headers, body } = options;
+  return await makeRequest(url, method, headers, body);
 };
 
 const buildUrl = (apiUrl, record = {}) => {
@@ -48,18 +53,7 @@ const buildUrl = (apiUrl, record = {}) => {
   return url;
 };
 
-export const makeGetRequest = async (apiUrl, record) => {
+export const makeReadRequest = async (apiUrl, record) => {
   const url = buildUrl(apiUrl, record);
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      credentials: "include",
-    });
-    
-    const data = await response.json();
-    return processApiResponse(data);
-  } catch (error) {
-    console.error(error);
-    return [error, null];
-  }
+  return await makeRequest(url, "GET");
 };

@@ -40,7 +40,7 @@ watchEffect(async () => {
 const router = useRouter();
 
 const trySignOut = async () => {
-  const errors = await signOut();
+  const [errors] = await signOut();
   if (!errors) router.push({ name: "login" });
 };
 

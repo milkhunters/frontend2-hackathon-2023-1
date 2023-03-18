@@ -13,7 +13,7 @@ const router = useRouter();
 
 const trySignIn = async () => {
   await signOut();
-  const error = await signIn({
+  const [error] = await signIn({
     email: email.value,
     password: password.value,
   });
