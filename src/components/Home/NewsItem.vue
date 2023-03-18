@@ -1,44 +1,34 @@
-<script>
-export default {
-  name: "NewsItem",
-  data() {
-    return {
-      isFull: false,
-    }
+<script setup>
+import { computed, ref } from "vue";
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
   },
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    body: {
-      type: String,
-      required: true,
-    },
+  body: {
+    type: String,
+    required: true,
   },
-  methods: {
-    minBody(body) {
-      return body.slice(0, 80)
-    }
-  }
-};
+});
+
+const isFull = ref(false);
+const minifiedBody = computed(() => props.body.slice(0, 80));
+const open = () => isFull.value = true;
+const close = () => isFull.value = false
 </script>
 
 <template>
-
-  <div class="news" @click="isFull ? isFull = false : isFull = true">
+  <div class="news" @click="open">
     <h4 class="news_title">{{ title }}</h4>
-    <p class="news_desc">{{ minBody(body) }}...</p>
+    <p class="news_desc">{{ minifiedBody }}...</p>
   </div>
 
   <div v-if="isFull" class="news_big">
-    <button @click="isFull ? isFull = false : isFull = true">
-      назад
-    </button>
+    <button @click="close">Назад</button>
     <h4 class="news_title">{{ title }}</h4>
     <p class="news_desc">{{ body }}</p>
   </div>
-
 </template>
 
 <style scoped>

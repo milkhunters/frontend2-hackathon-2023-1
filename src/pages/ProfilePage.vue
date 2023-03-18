@@ -19,7 +19,7 @@ const canSignOut = computed(() => !route.params.id);
 const editable = computed(() => {
   const watchingSelf = !route.params.id;
   const loggedUserHasHigherRole = loggedUser.value?.role === 5 && watchedUser.value?.role !== 5;
-  return watchingSelf || loggedUserHasHigherRole; 
+  return watchingSelf || loggedUserHasHigherRole;
 });
 
 const error = ref(null);
