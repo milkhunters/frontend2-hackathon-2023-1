@@ -1,19 +1,20 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import SignForm from "@/components/SignForm.vue";
-import { signIn } from "@/lib/api/auth/login";
-import useFormError from "@/composables/useFormError";
+import SignForm from "@/components/Login/SignForm.vue";
+import { signIn, signOut } from "@/lib/api/auth/login.js";
+import useFormError from "@/composables/useFormError.js";
 
-const username = ref("");
+const email = ref("");
 const password = ref("");
 
-const errorMessage = useFormError([username, password]);
+const errorMessage = useFormError([email, password]);
 const router = useRouter();
 
 const trySignIn = async () => {
+  await signOut();
   const error = await signIn({
-    username: username.value,
+    email: email.value,
     password: password.value,
   });
 
@@ -29,7 +30,7 @@ const trySignIn = async () => {
   <sign-form title="Вход" :error="errorMessage">
     <label>
       <p>Логин</p>
-      <input v-model="username" class="form_input" type="text" />
+      <input v-model="email" class="form_input" type="text" />
     </label>
 
     <label>
