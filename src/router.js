@@ -3,6 +3,7 @@ import HomePage from "@/pages/HomePage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import ProfilePage from "@/pages/ProfilePage.vue";
 import ChatPage from "@/pages/ChatPage.vue";
+import DeathPage from "@/pages/DeathPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: "/chat",
       name: "chat",
       component: ChatPage,
+    },
+    {
+      path: "/license",
+      name: "death",
+      component: DeathPage,
     }
   ],
 });
