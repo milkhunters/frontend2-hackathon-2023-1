@@ -19,7 +19,7 @@ const trySignIn = async () => {
     password: password.value,
   });
 
-  if (error) errorMessage.value = "Пользователь не найден!";
+  if (error) errorMessage.value = "Неверный логин или пароль";
   else router.push({ name: "home" });
 };
 </script>

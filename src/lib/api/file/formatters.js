@@ -1,6 +1,3 @@
+const FILE_STORAGE_URL = "https://hack.milkhunters.ru/api/v1/file"
 
-const FILE_STORAGE_URL = "https://hack.milkhunters.ru/api/v1/file/"
-
-export const getFileUrl = (id) => {
-    return FILE_STORAGE_URL + id;
-}
+export const getFileUrl = (id) => `${FILE_STORAGE_URL}/${id}`;
