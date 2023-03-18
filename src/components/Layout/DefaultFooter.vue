@@ -4,7 +4,6 @@
       <div class="footer_wrapper">
         <div class="footer_top">
           <div class="footer_left">
-            <img src="img/avpukptsk.png" alt="">
             Все материалы, размещенные на сайте, являются авторскими. Копирование запрещено. Все права защищены. ООО «Рогатки и Корова»
           </div>
           <div class="footer_right">
