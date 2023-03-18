@@ -5,8 +5,8 @@ import SignForm from "@/components/Login/SignForm.vue";
 import { signIn, signOut } from "@/lib/api/auth/login.js";
 import useFormError from "@/composables/useFormError.js";
 
-const email = ref("");
-const password = ref("");
+const email = ref("string@gmail.com");
+const password = ref("stringF23$");
 
 const errorMessage = useFormError([email, password]);
 const router = useRouter();
@@ -19,7 +19,7 @@ const trySignIn = async () => {
   });
 
   if (error) errorMessage.value = "Пользователь не найден!";
-  else router.push({ name: "profile" });
+  else router.push({ name: "home" });
 };
 </script>
 
