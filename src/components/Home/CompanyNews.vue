@@ -7,7 +7,7 @@ const companyNews = ref(null);
 
 onMounted(async () => {
   const [_, news] = await getArticles();
-  companyNews.value = news;
+  companyNews.value = Object.values(news ?? {});
 });
 </script>
 
