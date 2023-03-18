@@ -40,6 +40,7 @@ const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "
 </script>
 
 <template>
+
   <div>
     <input v-model="message" @keydown.enter="trySendMessage" type="text" />
     <button @click="trySendMessage">Send</button>
@@ -52,4 +53,5 @@ const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "
     @rejected="requestSendMessage(messageWithoutLinks)"
     message="Прикрепляя ссылку на сторонний ресурс вы полность несете ответственноть за любые возможные негативные последствия."
   />
+
 </template>

@@ -13,16 +13,14 @@ const changeDialog = (dialogId) => {
 
 <template>
   <default-layout>
-
     <main class="chats">
       <div class="container">
         <div class="chats_wrapper">
           <chat-rooms @dialog-selected="changeDialog" />
-          <chat-history v-if="currentDialog" :dialog-id="currentDialog" />
-        </div>
+          <chat-history  />
+      </div>
       </div>
     </main>
-
   </default-layout>
 </template>
 
