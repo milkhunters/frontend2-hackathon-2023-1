@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import SignForm from "@/components/Login/SignForm.vue";
 import { signIn, signOut } from "@/lib/api/auth/login.js";
-import SignForm from "@/components/SignForm.vue";
 import useFormError from "@/composables/useFormError.js";
 
 const email = ref("");

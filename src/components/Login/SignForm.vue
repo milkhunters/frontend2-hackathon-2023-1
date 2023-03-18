@@ -7,6 +7,7 @@ defineProps({
   error: {
     type: String,
     required: false,
+    default: null,
   }
 });
 </script>

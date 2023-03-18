@@ -1,34 +1,33 @@
 import { getUnreadMessagesCount } from "./profile.js";
 
-const INTERVAL_TIME = 5000;
+const REQUEST_DELAY = 5000;
 
 let subscription = null;
-let lastUpdatedMassage = null;
 const callbacks = new Set();
 
-export const subscribeToMessageCount = (userId, callback) => {
-  if (subscription === null) {
-    subscription = setInterval(async () => {
-      const [error, unreadMessagesCount] = await getUnreadMessagesCount(userId);
-      if (error) {
-        console.error(error);
-        return;
-      }
-      lastUpdatedMassage = unreadMessagesCount;
-      callbacks.forEach((callback) => callback(unreadMessagesCount));
-    }, INTERVAL_TIME);
-  }
-
-  callbacks.add(callback);
-  if (lastUpdatedMassage) callback(lastUpdatedMassage);
+const updateUnreadMessageCount = async () => {
+  const [error, unreadMessagesCount] = await getUnreadMessagesCount();
+  if (error) return console.error(error);
+  for (const callback of callbacks)
+    callback(unreadMessagesCount);
 };
 
-export const unsubscribeFromMessageCount = (userId, callback) => {
+const createUpdateInterval = () => {
+  return setInterval(async () => {
+    updateUnreadMessageCount();
+  }, REQUEST_DELAY);
+};
+
+export const subscribeToMessageCount = (callback) => {
+  subscription ??= createUpdateInterval()
+  callbacks.add(callback);
+};
+
+export const unsubscribeFromMessageCount = (callback) => {
   callbacks.delete(callback);
 
   if (callbacks.size === 0) {
     clearInterval(subscription);
     subscription = null;
-    lastUpdatedMassage = null;
   }
 };

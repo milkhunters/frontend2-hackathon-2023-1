@@ -1,14 +1,14 @@
 <script setup>
 import { useRouter } from "vue-router";
 import useUserProfile from "@/composables/useUserProfile.js";
-import useUnreadMessageCount from "@/composables/useUnreadMessageCount.js";
+import useSubscription from "@/composables/useSubscription.js";
+import { subscribeToMessageCount, unsubscribeFromMessageCount } from "@/lib/api/user/messages.js";
 import { userFullName } from "@/lib/api/user/profile.js";
 
 const user = useUserProfile();
-const unreadMessageCount = useUnreadMessageCount();
+const unreadMessageCount = useSubscription(subscribeToMessageCount, unsubscribeFromMessageCount, 0);
 
 const router = useRouter();
-
 const goToProfile = () => router.push({ name: "profile" });
 </script>
 
