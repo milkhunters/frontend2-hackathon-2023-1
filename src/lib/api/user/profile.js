@@ -9,7 +9,7 @@ export const getCurrentUserProfileInfo = async () => {
 };
 
 export const getUserProfileInfo = async (userId) => {
-  return [null, { id: "123", email: "other@mail.ru", firstName: "otherUser", role: 2 }];
+  return [null, { id: "123", email: "other@mail.ru", firstName: "otherUser", role: 3 }];
 };
 
 export const getUnreadMessagesCount = async () => {

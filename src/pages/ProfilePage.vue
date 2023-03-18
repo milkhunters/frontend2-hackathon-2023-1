@@ -14,10 +14,12 @@ const profile = computed(() => watchedUser.value ?? loggedUser.value);
 
 const route = useRoute();
 
+const canSignOut = computed(() => !route.params.id);
+
 const editable = computed(() => {
   const watchingSelf = !route.params.id;
-  const loggedUserHasHigherRole = loggedUser.value?.role > watchedUser.value?.role;
-  return watchingSelf || loggedUserHasHigherRole;
+  const loggedUserHasHigherRole = loggedUser.value?.role === 5 && watchedUser.value?.role !== 5;
+  return watchingSelf || loggedUserHasHigherRole; 
 });
 
 const error = ref(null);
@@ -67,7 +69,7 @@ const tryChangeAvatar = async () => {
       <p>Отдел - {{ profile.department }}</p>
       <p>Должность - {{ profile.jobTitle }}</p>
       <p>Уровень Доступа - {{ roleDescription(profile.role) }}</p>
-      <button @click="trySignOut">Выйти</button>
+      <button v-if="canSignOut" @click="trySignOut">Выйти</button>
     </div>
 
     <div v-if="editable && profile">

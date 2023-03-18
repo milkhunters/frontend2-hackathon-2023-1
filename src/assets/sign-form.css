@@ -22,7 +22,7 @@ form button {
   margin-top: 20px;
   cursor: pointer;
   background: var(--primary-color);
-  color: black;
+  color: white;
   font-weight: 600;
   font-size: 17px;
   border: none;
@@ -51,7 +51,7 @@ form button:hover {
   margin-top: 20px;
   cursor: pointer;
   background: var(--primary-color);
-  color: black;
+  color: white;
   font-weight: 600;
   font-size: 17px;
   border: none;
