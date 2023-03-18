@@ -6,8 +6,8 @@ import signIn from "@/lib/api/auth/signIn.js";
 import signOut from "@/lib/api/auth/signOut.js";
 import useFormError from "@/composables/useFormError.js";
 
-const email = ref("");
-const password = ref("");
+const email = ref("string@gmail.com");
+const password = ref("stringF23$");
 
 const errorMessage = useFormError([email, password]);
 const router = useRouter();
@@ -20,7 +20,7 @@ const trySignIn = async () => {
   });
 
   if (error) errorMessage.value = "Пользователь не найден!";
-  else router.push({ name: "profile" });
+  else router.push({ name: "home" });
 };
 </script>
 
@@ -28,12 +28,12 @@ const trySignIn = async () => {
   <sign-form title="Вход" :error="errorMessage">
     <label>
       <p>Логин</p>
-      <input v-model="email" class="form_input" type="text" />
+      <input v-model="email" class="form_input" type="text"/>
     </label>
 
     <label>
       <p class="log-pass">Пароль</p>
-      <input v-model="password" class="form_input" type="password" />
+      <input v-model="password" class="form_input" type="password"/>
     </label>
 
     <button @click.stop="trySignIn" class="form_btn">Авторизоваться</button>
@@ -41,5 +41,5 @@ const trySignIn = async () => {
 </template>
 
 <style scoped>
-@import "@/assets/sign-form.css";
+@import "@/assets/LoginStyles/sign-form.css";
 </style>

@@ -25,11 +25,12 @@ defineProps({
         <form @submit.prevent>
           <slot></slot>
         </form>
+
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-@import "@/assets/sign-form-base.css";
+@import "@/assets/LoginStyles/sign-form-base.css";
 </style>
