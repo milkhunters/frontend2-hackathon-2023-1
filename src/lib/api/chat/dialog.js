@@ -48,6 +48,6 @@ export const getDialogHistory = async (dialogId) => {
   ];
 };
 
-export const sendMessage = async (dialogId, message) => {
+export const sendMessage = async (dialogId, message, files) => {
   return [null, null];
 };

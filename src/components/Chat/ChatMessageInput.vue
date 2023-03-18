@@ -20,10 +20,12 @@ const emit = defineEmits({
 const message = ref("");
 const askedToDeleteLinks = ref(false);
 
+const files = ref(null);
+
 const requestSendMessage = async (formattedMessage) => {
   message.value = "";
   askedToDeleteLinks.value = false;
-  await sendMessage(props.dialogId, formattedMessage);
+  await sendMessage(props.dialogId, formattedMessage, files.value?.files);
   emit("messageSent", formattedMessage);
 };
 
@@ -34,16 +36,14 @@ const trySendMessage = async () => {
   else requestSendMessage(message.value);
 };
 
-const messageWithoutLinks = computed(() =>
-  replaceLinksInString(message.value, "(ссылка удалена)"),
-);
+const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "(ссылка удалена)"));
 </script>
 
 <template>
   <div>
     <input v-model="message" @keydown.enter="trySendMessage" type="text" />
     <button @click="trySendMessage">Send</button>
-    <input type="file" />
+    <input ref="files" type="file" multiple />
   </div>
 
   <modal-popup

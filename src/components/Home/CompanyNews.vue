@@ -24,6 +24,6 @@ export default {
 
 <template>
   <div class="news">
-    <news-item v-for="news in newsCompany" :key="news.id" :news="news" />
+    <news-item v-for="news in newsCompany" :key="news.id" v-bind="news" />
   </div>
 </template>

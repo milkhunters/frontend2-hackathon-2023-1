@@ -18,11 +18,8 @@ const trySignIn = async () => {
     password: password.value,
   });
 
-  if (error) {
-    errorMessage.value = "Пользователь не найден!";
-  } else {
-    router.push({ name: "profile" });
-  }
+  if (error) errorMessage.value = "Пользователь не найден!";
+  else router.push({ name: "profile" });
 };
 </script>
 

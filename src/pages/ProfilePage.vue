@@ -6,19 +6,20 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import ResetPasswordForm from "@/components/Profile/ResetPasswordForm.vue";
 import { signOut } from "@/lib/api/auth/login.js";
 import { roleDescription } from "@/lib/api/user/formatters.js";
-import { getUserProfileInfo } from "@/lib/api/user/profile.js";
+import { getUserProfileInfo, changeAvatar } from "@/lib/api/user/profile.js";
+
+// TODO: fix bug.
+
+const loggedUser = useUserProfile();
+const watchedUser = ref(null);
+const profile = computed(() => watchedUser.value ?? loggedUser.value);
 
 const route = useRoute();
 
-const currentUser = useUserProfile();
-const watchedUser = ref(null);
-
-const profile = computed(() => watchedUser.value ?? currentUser.value);
-
 const editable = computed(() => {
   const watchingSelf = !route.params.id;
-  const hasHigherRole = currentUser.value?.role > watchedUser.value?.role;
-  return watchingSelf || hasHigherRole;
+  const loggedUserHasHigherRole = loggedUser.value?.role > watchedUser.value?.role;
+  return watchingSelf || loggedUserHasHigherRole;
 });
 
 const error = ref(null);
@@ -43,7 +44,17 @@ const trySignOut = async () => {
   if (!errors) router.push({ name: "login" });
 };
 
-const changeAvatar = async () => {};
+const files = ref(null);
+
+const tryChangeAvatar = async () => {
+  const [errors, content] = await changeAvatar(files.value?.files[0]);
+  if (errors) {
+    error.value = errors;
+  } else {
+    error.value = null;
+    // TODO: update image.
+  }
+};
 </script>
 
 <template>
@@ -51,8 +62,8 @@ const changeAvatar = async () => {};
     <div v-if="profile">
       <p>
         <img :src="profile.avatar_id" alt="user-avatar" />
-        <input type="file" />
-        <button @click="changeAvatar">Изменить аватарку</button>
+        <input ref="files" type="file" />
+        <button @click="tryChangeAvatar">Изменить аватарку</button>
       </p>
       <p>ФИО - {{ profile.lastName }} {{ profile.firstName }} {{ profile.patronymic }}</p>
       <p>Отдел - {{ profile.department }}</p>

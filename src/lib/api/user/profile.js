@@ -17,3 +17,7 @@ export const getUnreadMessagesCount = async () => {
 export const resetPassword = async (userId) => {
   return ["Неверный пароль.", null];
 };
+
+export const changeAvatar = async (file) => {
+  return [null, null] 
+};

@@ -10,35 +10,30 @@ const emit = defineEmits({
   },
 });
 
-const filter = ref("");
 const dialogs = ref(null);
-
-const filteredDialogs = computed(() => {
-  if (filter.value === "") return { "Все:": dialogs.value };
-
-  const filterByProp = (prop) =>
-    dialogs.value.filter((dialog) => dialog[prop].includes(filter.value));
-
-  const filteredByName = filterByProp("name");
-  const filteredByDepartment = filterByProp("department").filter(
-    (dialog) => !filteredByName.includes(dialog),
-  );
-
-  return { "По ФИО:": filteredByName, "По отделу:": filteredByDepartment };
-});
 
 onMounted(async () => {
   const [error, content] = await getAllDialogs();
   if (!error) dialogs.value = content;
 });
 
+const filter = ref("");
+
+const filteredDialogs = computed(() => {
+  if (filter.value === "") return { "Все:": dialogs.value };
+
+  const filterByProp = (prop) => dialogs.value.filter((dialog) => dialog[prop].includes(filter.value));
+  const filteredByName = filterByProp("name");
+  const filteredByDepartment = filterByProp("department")
+    .filter((dialog) => !filteredByName.includes(dialog));
+
+  return { "По ФИО:": filteredByName, "По отделу:": filteredByDepartment };
+});
+
 const selectDialog = (dialogId) => emit("dialogSelected", dialogId);
 
 const router = useRouter();
-
-const goToProfile = (id) => {
-  router.push({ name: "profile", prams: { id } });
-};
+const goToProfile = (id) => router.push({ name: "profile", prams: { id } });
 </script>
 
 <template>
