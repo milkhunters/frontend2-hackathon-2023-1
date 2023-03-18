@@ -32,5 +32,5 @@ defineProps({
 </template>
 
 <style scoped>
-/*@import "@/assets/LoginStyles/sign-form-base.css";*/
+@import "@/assets/LoginStyles/sign-form-base.css";
 </style>
