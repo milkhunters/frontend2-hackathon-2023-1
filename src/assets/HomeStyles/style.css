@@ -186,15 +186,3 @@
   color: white;
 }
 
-/*.banner-list-enter-active,*/
-/*.banner-list-leave-active {*/
-/*  transition: all 1s ease;*/
-/*}*/
-/*.banner-list-enter-from,*/
-/*.banner-list-leave-to {*/
-/*  opacity: 0;*/
-/*  transform: translateX(30px);*/
-/*}*/
-/*.banner-list-move {*/
-/*  transition: transform 0.8s ease;*/
-/*}*/

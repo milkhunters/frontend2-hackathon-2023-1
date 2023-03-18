@@ -1,4 +1,3 @@
-
 /* CHATS */
 .chats {
     height: calc(100vh - 80px);
@@ -20,7 +19,7 @@
     padding: 12px;
     height: 100%;
     overflow: auto;
-    border-right: 1px solid var(--line-light);
+    border-right: 1px solid black;
 }
 .chats_message_side::-webkit-scrollbar {
     width: 12px;
@@ -109,8 +108,8 @@
 
 /* chat */
 .chat {
-    background: var(--container-color);
-    border: 1px solid var(--line-light);
+    background: #fff;
+    border: 1px solid #5b5757;
     border-radius: 15px;
     padding: 10px 20px;
     display: flex;
@@ -139,7 +138,7 @@
     text-overflow: ellipsis;
 }
 .chat_who {
-    color: var(--text-color-light);
+    color: #5b5757;
     font-size: .91rem;
     white-space: nowrap;
     overflow: hidden;
