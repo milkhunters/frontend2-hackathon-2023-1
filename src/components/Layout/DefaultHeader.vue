@@ -1,15 +1,16 @@
 <script setup>
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 import useUserProfile from "@/composables/useUserProfile.js";
 import useSubscription from "@/composables/useSubscription.js";
-import {subscribeToMessageCount, unsubscribeFromMessageCount} from "@/lib/api/user/messages.js";
-import {userAvatarId, userFullName} from "@/lib/api/user/formatters.js";
+import { subscribeToMessageCount, unsubscribeFromMessageCount } from "@/lib/api/user/messages.js";
+import { userFullName } from "@/lib/api/user/formatters.js";
 
 const user = useUserProfile();
 const unreadMessageCount = useSubscription(subscribeToMessageCount, unsubscribeFromMessageCount, 0);
 
 const router = useRouter();
-const goToProfile = () => router.push({name: "profile"});
+const goToProfile = () => router.push({ name: "profile" });
+const goToChat = () => router.push({ name: "chat" });
 </script>
 
 <template>
@@ -18,14 +19,14 @@ const goToProfile = () => router.push({name: "profile"});
       <!-- profile -->
       <a class="header_profile" href="#">
         <div class="profile_img">
-          <img src="@/assets/img/UserAvatar.jpg" alt="user-avatar" @click="goToProfile"/>
+          <img src="@/assets/img/UserAvatar.jpg" alt="user-avatar" @click="goToProfile" />
         </div>
         <p class="profile_name">{{ userFullName(user) }}</p>
       </a>
       <!-- chats -->
       <div class="header_chats">
-        <img alt="chat-icon" src="@/assets/img/chat.svg" @click="router.push('chat')">
-        <div class="header_chats_notify">
+        <img alt="chat-icon" src="@/assets/img/chat.svg" @click="goToChat" />
+        <div v-if="unreadMessageCount" class="header_chats_notify">
           {{ unreadMessageCount }}
         </div>
       </div>

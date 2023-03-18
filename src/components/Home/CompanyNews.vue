@@ -2,7 +2,7 @@
 import { reactive } from "vue";
 import NewsItem from "./NewsItem.vue";
 
-const newsCompany = reactive([
+const companyNews = reactive([
   {
     id: 1,
     title: "Правила депортации космических коров",
@@ -37,7 +37,12 @@ const newsCompany = reactive([
     <div class="container">
       <h2 class="sec-title">Новости</h2>
       <div class="news_wrapper">
-        <news-item v-for="news in newsCompany" :key="news.id" v-bind="news" />
+        <news-item
+          v-for="news in companyNews"
+          :key="news.id"
+          :title="news.title"
+          :body="news.body"
+        />
       </div>
     </div>
   </section>

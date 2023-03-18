@@ -6,28 +6,27 @@ const products = ref([
   { id: 2, url: "https://i.imgur.com/7xyaMce.png" },
   { id: 3, url: "https://i.imgur.com/kwFIUNS.png" },
 ]);
-const bannerProduct = ref(0);
-const intervalID = ref(null);
+const currentBunner = ref(0);
+const intervalId = ref(null);
 
 const startInterval = () => {
-  intervalID.value = setInterval(goAhead, 3000);
+  stopInterval();
+  intervalId.value = setInterval(goAhead, 3000);
 };
 
 const stopInterval = () => {
-  clearInterval(intervalID);
+  if (intervalId.value) clearInterval(intervalId.value);
 };
 
 const goAhead = () => {
-  if (bannerProduct.value === products.value.length - 1) (bannerProduct.value = 0)
-  else (bannerProduct.value += 1);
-  stopInterval();
+  if (currentBunner.value === products.value.length - 1) currentBunner.value = 0;
+  else currentBunner.value++;
   startInterval();
 };
 
 const goBack = () => {
-  if (bannerProduct.value === 0) (bannerProduct.value = products.value.length - 1)
-  else (bannerProduct.value -= 1);
-  stopInterval();
+  if (currentBunner.value === 0) currentBunner.value = products.value.length - 1;
+  else currentBunner.value--;
   startInterval();
 };
 
@@ -38,9 +37,7 @@ onMounted(() => {
 onUnmounted(() => {
   stopInterval();
 });
-const banner = computed(() => {
-  return this.products[this.bannerProduct];
-});
+const banner = computed(() => products.value[currentBunner.value]);
 </script>
 
 <template>
