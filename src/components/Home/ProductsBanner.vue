@@ -1,12 +1,19 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from "vue";
+import { getBanners } from "@/lib/api/banner/banner.js";
 
-const products = ref([
-  { id: 1, url: "https://i.imgur.com/IVMd5RR.png" },
-  { id: 2, url: "https://i.imgur.com/7xyaMce.png" },
-  { id: 3, url: "https://i.imgur.com/kwFIUNS.png" },
-]);
-const currentBunner = ref(0);
+const products = ref(null);
+
+onMounted(async () => {
+  const [_, banners] = await getBanners();
+  products.value = banners;
+});
+
+const currentBunnerIndex = ref(0);
+const banner = computed(() => products.value 
+  ? products.value[currentBunnerIndex.value]
+  : null);
+
 const intervalId = ref(null);
 
 const startInterval = () => {
@@ -19,14 +26,20 @@ const stopInterval = () => {
 };
 
 const goAhead = () => {
-  if (currentBunner.value === products.value.length - 1) currentBunner.value = 0;
-  else currentBunner.value++;
+  if (currentBunnerIndex
+.value === products.value.length - 1) currentBunnerIndex
+.value = 0;
+  else currentBunnerIndex
+.value++;
   startInterval();
 };
 
 const goBack = () => {
-  if (currentBunner.value === 0) currentBunner.value = products.value.length - 1;
-  else currentBunner.value--;
+  if (currentBunnerIndex
+.value === 0) currentBunnerIndex
+.value = products.value.length - 1;
+  else currentBunnerIndex
+.value--;
   startInterval();
 };
 
@@ -37,13 +50,12 @@ onMounted(() => {
 onUnmounted(() => {
   stopInterval();
 });
-const banner = computed(() => products.value[currentBunner.value]);
 </script>
 
 <template>
   <section class="main_banner">
     <div class="container">
-      <img :src="banner.url" alt="frame-selection" class="banner_img" />
+      <img v-if="banner" :src="banner.url" alt="frame-selection" class="banner_img" />
       <div class="banner_buttons">
         <button @click="goBack">
           <svg

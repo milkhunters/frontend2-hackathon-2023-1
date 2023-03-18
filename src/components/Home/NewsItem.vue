@@ -6,7 +6,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  body: {
+  text: {
     type: String,
     required: true,
   },
@@ -27,7 +27,7 @@ const close = () => isFull.value = false
   <div v-if="isFull" class="news_big">
     <button @click="close">Назад</button>
     <h4 class="news_title">{{ title }}</h4>
-    <p class="news_desc">{{ body }}</p>
+    <p class="news_desc">{{ text }}</p>
   </div>
 </template>
 
