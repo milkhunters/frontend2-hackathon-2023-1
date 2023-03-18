@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import useFormError from "@/composables/useFormError.js";
 import { resetPassword } from "@/lib/api/user/profile.js";
 
@@ -17,18 +17,25 @@ const newPasswordRepeated = ref("");
 const error = useFormError([newPassword, newPasswordRepeated]);
 const success = ref(null);
 
-watch(error, () => (success.value = null));
-watch(success, () => (error.value = null));
+const setError = (errorMessage) => {
+  error.value = errorMessage;
+  success.value = null;
+};
+
+const setSuccess = (successMessage) => {
+  error.value = null;
+  success.value = successMessage;
+};
 
 const tryResetPassword = async () => {
   if (newPassword.value !== newPasswordRepeated.value) {
-    error.value = "Пароли не совпадают.";
+    setError("Пароли не совпадают.");
     return;
   }
 
   const [errors] = await resetPassword(props.profileId);
-  if (errors) error.value = errors;
-  else success.value = "Пароль изменен.";
+  if (errors) setError(errors);
+  else setSuccess("Пароль изменен.");
 };
 </script>
 

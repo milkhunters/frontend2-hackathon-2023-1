@@ -33,7 +33,7 @@ const filteredDialogs = computed(() => {
 const selectDialog = (dialogId) => emit("dialogSelected", dialogId);
 
 const router = useRouter();
-const goToProfile = (id) => router.push({ name: "profile", prams: { id } });
+const goToProfile = (id) => router.push({ name: "profile", params: { id } });
 </script>
 
 <template>

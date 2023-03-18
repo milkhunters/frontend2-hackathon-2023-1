@@ -8,11 +8,8 @@ const useUserProfile = () => {
 
   onMounted(async () => {
     const [error, userInfo] = await getCurrentUserProfileInfo();
-    if (error) {
-      router.push({ name: "login" });
-    } else {
-      user.value = userInfo;
-    }
+    if (error) router.push({ name: "login" }); 
+    else user.value = userInfo;
   });
 
   return user;

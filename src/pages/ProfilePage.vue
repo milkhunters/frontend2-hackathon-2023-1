@@ -4,11 +4,9 @@ import { useRoute, useRouter } from "vue-router";
 import useUserProfile from "@/composables/useUserProfile.js";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import ResetPasswordForm from "@/components/Profile/ResetPasswordForm.vue";
-import { signOut } from "@/lib/api/auth/login.js";
+import signOut from "@/lib/api/auth/signOut.js";
 import { roleDescription } from "@/lib/api/user/formatters.js";
 import { getUserProfileInfo, changeAvatar } from "@/lib/api/user/profile.js";
-
-// TODO: fix bug.
 
 const loggedUser = useUserProfile();
 const watchedUser = ref(null);
