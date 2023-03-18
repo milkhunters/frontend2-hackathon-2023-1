@@ -16,3 +16,7 @@ export default {
     <CompanyNews />
   </default-layout>
 </template>
+
+<style scoped>
+@import "@/assets/HomeStyles/base.css"
+</style>
