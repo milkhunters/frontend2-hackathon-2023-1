@@ -13,7 +13,19 @@ const changeDialog = (dialogId) => {
 
 <template>
   <default-layout>
-    <chat-rooms @dialog-selected="changeDialog" /> 
-    <chat-history v-if="currentDialog" :dialog-id="currentDialog" />
+
+    <main class="chats">
+      <div class="container">
+        <div class="chats_wrapper">
+          <chat-rooms @dialog-selected="changeDialog" />
+          <chat-history v-if="currentDialog" :dialog-id="currentDialog" />
+        </div>
+      </div>
+    </main>
+
   </default-layout>
 </template>
+
+ <style scoped>
+ @import "@/assets/ChatStyles/chats.css";
+ </style>
