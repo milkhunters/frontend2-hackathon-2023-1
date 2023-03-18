@@ -5,14 +5,15 @@ import { getBanners } from "@/lib/api/banner/banner.js";
 const products = ref(null);
 
 onMounted(async () => {
-  const [_, banners] = await getBanners();
-  products.value = banners;
+  const banners = await getBanners();
+  products.value = banners ?? [];
+  startInterval();
 });
 
 const currentBunnerIndex = ref(0);
-const banner = computed(() => products.value 
-  ? products.value[currentBunnerIndex.value]
-  : null);
+const banner = computed(() => {
+  return products.value ? products.value[currentBunnerIndex.value] : null;
+});
 
 const intervalId = ref(null);
 
@@ -26,26 +27,16 @@ const stopInterval = () => {
 };
 
 const goAhead = () => {
-  if (currentBunnerIndex
-.value === products.value.length - 1) currentBunnerIndex
-.value = 0;
-  else currentBunnerIndex
-.value++;
+  if (currentBunnerIndex.value === products.value.length - 1) currentBunnerIndex.value = 0;
+  else currentBunnerIndex.value++;
   startInterval();
 };
 
 const goBack = () => {
-  if (currentBunnerIndex
-.value === 0) currentBunnerIndex
-.value = products.value.length - 1;
-  else currentBunnerIndex
-.value--;
+  if (currentBunnerIndex.value === 0) currentBunnerIndex.value = products.value.length - 1;
+  else currentBunnerIndex.value--;
   startInterval();
 };
-
-onMounted(() => {
-  startInterval();
-});
 
 onUnmounted(() => {
   stopInterval();
@@ -55,7 +46,7 @@ onUnmounted(() => {
 <template>
   <section class="main_banner">
     <div class="container">
-      <img v-if="banner" :src="banner.url" alt="frame-selection" class="banner_img" />
+      <img v-if="banner" :src="banner" alt="frame-selection" class="banner_img" />
       <div class="banner_buttons">
         <button @click="goBack">
           <svg
