@@ -27,8 +27,6 @@ const editable = computed(() => {
   return watchingSelf || loggedUserHasHigherRole;
 });
 
-const isOpenEditPart = ref(false);
-
 const error = ref(null);
 
 watch(
@@ -53,14 +51,11 @@ const trySignOut = async () => {
 };
 
 const files = ref(null);
+const display = ref("none");
 
-const goToProfile = async () => {
-  document.getElementById("profile_content_change").style.display = "none";
-};
+const goToProfile = async () => (display.value = "none");
+const goToOptions = async () => (display.value = "initial");
 
-const goToOptions = async () => {
-  document.getElementById("profile_content_change").style.display = "initial";
-};
 const tryChangeAvatar = async () => {
   const file = files.value?.files[0];
   if (!file) return;
@@ -76,7 +71,7 @@ const tryChangeAvatar = async () => {
       <div v-if="profile" class="container">
         <div class="profile_content_img">
           <img src="@/assets/img/UserAvatar.jpg" alt="logo-user" />
-          <button @click="trySignOut">Выйти</button>
+          <button v-if="canSignOut" @click="trySignOut">Выйти</button>
         </div>
         <div class="profile_content">
           <template v-if="watchable">
@@ -95,7 +90,7 @@ const tryChangeAvatar = async () => {
               Редактировать профиль
             </button>
             <!-- Плашка с изменениями (открывать при нажатии на редактировать профиль) -->
-            <div id="profile_content_change">
+            <div :style="{ display: display }" id="profile_content_change">
               <div class="profile_change_item">
                 <p class="profile_change_item_title">Изменить аватарку</p>
                 <div class="profile_change_item_row">
