@@ -6,8 +6,7 @@ let subscription = null;
 const callbacks = new Set();
 
 const updateUnreadMessageCount = async () => {
-  const [error, unreadMessagesCount] = await getUnreadMessagesCount();
-  if (error) return console.error(error);
+  const unreadMessagesCount = await getUnreadMessagesCount();
   for (const callback of callbacks)
     callback(unreadMessagesCount);
 };

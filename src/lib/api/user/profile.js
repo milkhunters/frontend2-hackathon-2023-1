@@ -2,6 +2,7 @@ import { encodeJson, makeReadRequest, makeWriteRequest, processApiResponse } fro
 
 const API_CURRENT_USER_URL = "user/current";
 const API_UPDATE_PASSWORD_URL = "user/update_my_password";
+const API_UNREAD_COUNT_URL = "dialog/unread_count";
 
 export const getCurrentUserProfileInfo = async () => {
   const [error, response] = await makeReadRequest(API_CURRENT_USER_URL);
@@ -14,7 +15,9 @@ export const getUserProfileInfo = async (userId) => {
 };
 
 export const getUnreadMessagesCount = async () => {
-  return [null, 5];
+  const [_, response] = await makeReadRequest(API_UNREAD_COUNT_URL);
+  const data = await response.json();
+  return data.message;
 };
 
 export const resetPassword = async (oldPassword, newPassword) => {

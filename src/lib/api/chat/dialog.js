@@ -1,53 +1,17 @@
+import { formatResponse, makeReadRequest } from "../api";
+
+const API_DIALOGS_URL = "dialog/list";
+
+const getDialogHistoryUrl = (id) => `dialog/${id}/history`;
+
 export const getAllDialogs = async () => {
-  return [
-    null,
-    [
-      {
-        id: "1",
-        name: "serg",
-        jobTitle: "Killer",
-        avatar: "http://www.test.com/",
-        department: "sales",
-        role: 0,
-      },
-      {
-        id: "2",
-        name: "andew",
-        jobTitle: "DeathEater",
-        avatar: "http://www.test.com/",
-        department: "fishing",
-        role: 1,
-      },
-    ],
-  ];
+  const [_, dialogs] = await makeReadRequest(API_DIALOGS_URL);
+  const data = await dialogs.json();
+  return formatResponse(data.message);
 };
 
 export const getDialogHistory = async (dialogId) => {
-  return [
-    null,
-    {
-      1: [
-        {
-          id: "0",
-          createdAt: "2023-01-11",
-          from: "you",
-          text: "hello",
-          fileName: "http://www.test.com/",
-        },
-      ],
-      2: [
-        {
-          id: "1",
-          createdAt: "2023-01-11",
-          from: "name",
-          text: "there",
-          fileName: "http://www.com",
-        },
-      ],
-    }[dialogId],
-  ];
-};
-
-export const sendMessage = async (dialogId, message, files) => {
-  return [null, null];
+  const [_, messages] = await makeReadRequest(getDialogHistoryUrl(dialogId), { user_id: dialogId });
+  const data = await messages.json();
+  return formatResponse(data.message);
 };

@@ -16,14 +16,12 @@ const goToChat = () => router.push({ name: "chat" });
 <template>
   <header class="header">
     <div v-if="user" class="container">
-      <!-- profile -->
       <a class="header_profile" href="#">
         <div class="profile_img">
           <img src="@/assets/img/UserAvatar.jpg" alt="user-avatar" @click="goToProfile" />
         </div>
         <p class="profile_name" @click="goToProfile">{{ userFullName(user) }}</p>
       </a>
-      <!-- chats -->
       <div class="header_chats">
         <img alt="chat-icon" src="@/assets/img/chat.svg" @click="goToChat" />
         <div v-if="unreadMessageCount" class="header_chats_notify">
