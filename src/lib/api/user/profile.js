@@ -19,7 +19,10 @@ export const getUnreadMessagesCount = async () => {
 
 export const resetPassword = async (oldPassword, newPassword) => {
   const body = { old_password: oldPassword, new_password: newPassword };
-  return makeWriteRequest(API_UPDATE_PASSWORD_URL, encodeJson(body));
+  const [error, response] = await makeWriteRequest(API_UPDATE_PASSWORD_URL, encodeJson(body));
+  const data = response ? await response.json() : null;
+  console.log(error, data)
+  return processApiResponse(data, error.error);
 };
 
 export const changeAvatar = async (file) => {
