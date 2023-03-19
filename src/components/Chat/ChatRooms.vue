@@ -1,8 +1,8 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { getAllDialogs } from "@/lib/api/chat/dialog.js";
-import { getFileUrl } from "../../lib/api/file/file";
+import { getAllDialogs, getAllUsers, openDialog } from "@/lib/api/chat/dialog.js";
+import { getFileUrl } from "@/lib/api/file/file.js";
 
 const emit = defineEmits({
   dialogSelected(dialogId) {
@@ -11,18 +11,29 @@ const emit = defineEmits({
 });
 
 const dialogs = ref(null);
+const allUsers = ref(null);
 
-onMounted(async () => {
-  dialogs.value = await getAllDialogs();
-});
+const fetchDialogs = async () => {
+  const allDialogs = await getAllDialogs();
+  const users = await getAllUsers();
+  dialogs.value = allDialogs;
+  allUsers.value = users;
+};
+
+onMounted(() => fetchDialogs());
 
 const filter = ref("");
 
 const filteredDialogs = computed(() => {
-  if (filter.value === "") return { "Все:": dialogs.value };
+  if (filter.value === "") return { "": dialogs.value };
 
-  const filterByProp = (prop) => dialogs.value.filter((dialog) => dialog[prop].includes(filter.value));
-  const filteredByName = filterByProp("title");
+  const filterByProp = (prop) =>
+    allUsers.value.filter((dialog) => {
+      const field = dialog[prop];
+      if (!field) return false;
+      return field.toLowerCase().includes(filter.value.toLowerCase());
+    });
+  const filteredByName = filterByProp("firstName");
   const filteredByDepartment = filterByProp("departament").filter(
     (dialog) => !filteredByName.includes(dialog),
   );
@@ -30,7 +41,11 @@ const filteredDialogs = computed(() => {
   return { "По ФИО:": filteredByName, "По отделу:": filteredByDepartment };
 });
 
-const selectDialog = (dialogId) => emit("dialogSelected", dialogId);
+const selectDialog = async (dialogId) => {
+  if (dialogs.value.filter(({ id }) => id === dialogId).length === 0) await openDialog(dialogId);
+  await fetchDialogs();
+  emit("dialogSelected", dialogId);
+};
 
 const router = useRouter();
 const goToProfile = (id) => router.push({ name: "profile", params: { id } });
@@ -47,18 +62,18 @@ const goToProfile = (id) => router.push({ name: "profile", params: { id } });
     <template v-if="dialogs">
       <div v-for="(dialogs, category) in filteredDialogs" :key="category">
         <template v-if="dialogs.length">
-          <p>{{ category }}</p>
+          <p v-if="category">{{ category }}</p>
           <div
             v-for="dialog in dialogs"
             :key="dialog.id"
             class="chat"
-            @click="selectDialog(dialog.id)"
+            @click.stop="selectDialog(dialog.id)"
           >
             <div class="chat_content">
-              <img :src="getFileUrl(dialog.avatarId)" @click="goToProfile" />
-              <p class="chat_name">{{ dialog.title }}</p>
-              <p class="chat_who">{{ dialog.departament }}</p>
-              <div class="chat_notify">{{ dialog.unreadCount }}</div>
+              <img :src="getFileUrl(dialog.avatarId)" @click="goToProfile(dialog.ownerId ?? dialog.id)" />
+              <p class="chat_name">{{ dialog.title ?? dialog.firstName }}</p>
+              <p class="chat_who">{{ dialog.department }}</p>
+              <div class="chat_notify">{{ dialog.unreadCount ?? 0 }}</div>
             </div>
           </div>
         </template>

@@ -38,8 +38,10 @@ const matchLinkRegExp = new RegExp("((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/
 + "\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?"
 + "(?:\\b|$)", "g");
 
+const matchDomain = new RegExp("\\b(?!hack\\.milkhunters\\.ru\\b)((?:https?|ftp)://[^\\s/$.?#].[^\\s]*)\\b", "g"); 
+
 export const findLinksInString = (string) => {
-  return matchLinkRegExp.test(string);
+  return !matchDomain.test(string) && matchLinkRegExp.test(string);
 };
 
 export const replaceLinksInString = (string, replacement) => {
