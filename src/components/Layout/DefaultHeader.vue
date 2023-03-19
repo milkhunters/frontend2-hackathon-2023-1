@@ -3,7 +3,6 @@ import { useRouter } from "vue-router";
 import useUserProfile from "@/composables/useUserProfile.js";
 import useSubscription from "@/composables/useSubscription.js";
 import { subscribeToMessageCount, unsubscribeFromMessageCount } from "@/lib/api/user/messages.js";
-import { userFullName } from "@/lib/api/user/formatters.js";
 
 const user = useUserProfile();
 const unreadMessageCount = useSubscription(subscribeToMessageCount, unsubscribeFromMessageCount, 0);
@@ -20,7 +19,7 @@ const goToChat = () => router.push({ name: "chat" });
         <div class="profile_img">
           <img src="@/assets/img/UserAvatar.jpg" alt="user-avatar" @click="goToProfile" />
         </div>
-        <p class="profile_name" @click="goToProfile">{{ userFullName(user) }}</p>
+        <p class="profile_name" @click="goToProfile">{{ user.lastName }} {{ user.firstName }} {{ user.patronymic }}</p>
       </a>
       <div class="header_chats">
         <img alt="chat-icon" src="@/assets/img/chat.svg" @click="goToChat" />
@@ -31,7 +30,3 @@ const goToChat = () => router.push({ name: "chat" });
     </div>
   </header>
 </template>
-
-<!--<style scoped>-->
-<!--@import "@/assets/HomeStyles/style.css";-->
-<!--</style>-->

@@ -1,4 +1,4 @@
-import { formatResponse, makeReadRequest } from "../api";
+import { formatResponse, makeReadRequest } from "../api.js";
 
 const API_DIALOGS_URL = "dialog/list";
 const API_USERS_URL = "user/list";

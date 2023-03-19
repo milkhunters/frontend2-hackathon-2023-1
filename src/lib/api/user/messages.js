@@ -1,6 +1,6 @@
 import { getUnreadMessagesCount } from "./profile.js";
 
-const REQUEST_DELAY = 5000;
+const REQUEST_DELAY = 2000;
 
 let subscription = null;
 const callbacks = new Set();
