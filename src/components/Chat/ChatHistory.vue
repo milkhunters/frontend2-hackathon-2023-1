@@ -81,7 +81,6 @@
 
 <style scoped>
 @import "@/assets/ChatStyles/chats.css";
-@import "@/assets/HomeStyles/base.css";
 @import "@/assets/HomeStyles/style.css";
 @import "@/assets/HeaderStyles/default-header.css";
 </style>

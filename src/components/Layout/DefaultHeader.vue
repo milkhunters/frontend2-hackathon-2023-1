@@ -21,7 +21,7 @@ const goToChat = () => router.push({ name: "chat" });
         <div class="profile_img">
           <img src="@/assets/img/UserAvatar.jpg" alt="user-avatar" @click="goToProfile" />
         </div>
-        <p class="profile_name">{{ userFullName(user) }}</p>
+        <p class="profile_name" @click="goToProfile">{{ userFullName(user) }}</p>
       </a>
       <!-- chats -->
       <div class="header_chats">

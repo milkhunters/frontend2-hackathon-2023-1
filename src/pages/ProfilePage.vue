@@ -95,7 +95,6 @@ const tryChangeAvatar = async () => {
             <div v-if="editable && profile">
               <reset-password-form :profile-id="profile.id" />
             </div>
-
           </div>
 
           <p v-if="error">{{ error }}</p>
@@ -103,11 +102,14 @@ const tryChangeAvatar = async () => {
         </div>
       </div>
     </div>
-
     </body>
   </default-layout>
 </template>
 
 <style scoped>
-@import "@/assets/ProfileStyles/profile-styles.css"
+@import "@/assets/ProfileStyles/profile-styles.css";
+
+body {
+  height: 100vh;
+}
 </style>
