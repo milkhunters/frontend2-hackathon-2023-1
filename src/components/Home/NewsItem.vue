@@ -31,6 +31,6 @@ const close = () => isFull.value = false
   </div>
 </template>
 
-<style scoped>
-@import "@/assets/HomeStyles/style.css";
-</style>
+<!--<style scoped>-->
+<!--@import "@/assets/HomeStyles/style.css";-->
+<!--</style>-->

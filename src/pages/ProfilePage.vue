@@ -27,8 +27,7 @@ const editable = computed(() => {
 });
 
 const isOpenEditPart = ref(false);
-const openEditPart = () => (isOpenEditPart.value = true);
-const closeEditPart = () => (isOpenEditPart.value = false);
+
 
 const error = ref(null);
 
@@ -41,7 +40,7 @@ watchEffect(async () => {
   const id = route.params.id;
   if (!id) return;
   const [errors, watchedUserInfo] = await getUserProfileInfo(id);
-  console.log(watchedUserInfo)
+  console.log(error, watchedUserInfo)
   if (errors) error.value = errors;
   else watchedUser.value = watchedUserInfo;
 });
@@ -73,75 +72,42 @@ const tryChangeAvatar = async () => {
 
 <template>
   <default-layout>
-
     <div v-if="profile" class="profile">
       <div class="container">
         <div class="profile_content_img">
-          <img src="@/assets/img/UserAvatar.jpg" alt="logo-user" />
-          <button v-if="canSignOut" @click="trySignOut">Выйти</button>
+          <img src="@/assets/img/UserAvatar.jpg" alt="logo-user">
+          <button @click="trySignOut">Выйти</button>
         </div>
-
         <div class="profile_content">
-          <h2 class="profile_content_name">
-            {{ profile.lastName }} {{ profile.firstName }} {{ profile.patronymic }}
-          </h2>
-          <p class="profile_content_place">
-            <span>Место:</span><br />
-            {{ profile.department }}
-          </p>
-          <p class="profile_content_dolg">
-            <span>Должность:</span><br />
-            {{ profile.jobTitle }}
-          </p>
-
-          <button
-              v-if="!isOpenEditPart"
-              @click="goToOptions"
-              class="profile_content_change-button"
-          >
-            Настройки
-          </button>
-          <div v-if="editable" id="profile_content_change">
+          <h2 class="profile_content_name">{{ profile.lastName }} {{ profile.firstName }} {{ profile.patronymic }}</h2>
+          <p class="profile_content_place"><span>Место:</span><br>  {{ profile.department }}</p>
+          <p class="profile_content_dolg"><span>Должность:</span><br> {{ profile.jobTitle }}</p>
+          <button class="profile_content_change-button" @click="goToOptions">Редактировать профиль</button>
+          <!-- Плашка с изменениями (открывать при нажатии на редактировать профиль) -->
+          <div id="profile_content_change">
             <div class="profile_change_item">
               <p class="profile_change_item_title">Изменить аватарку</p>
               <div class="profile_change_item_row">
-                <input id="file_img" ref="files" type="file" />
-                <button @click="tryChangeAvatar">Изменить аватарку</button>
+                <input id="file_img" name="file" type="file" />
+                <button>Изменить аватарку</button>
               </div>
             </div>
 
-            <button
-                v-if="!isOpenEditPart"
-                @click="goToProfile"
-                class="profile_content_change-button"
-            >
-              Профиль
-            </button>
-
-            <button
-              v-if="!isOpenEditPart"
-              @click="openEditPart"
-              class="profile_content_change-button"
-            >
-              Редактировать профиль
-            </button>
+                <reset-password-form :profile-id="profile.id" />
+            <button class="profile_content_change-button" @click="goToProfile">Назад</button>
+              </div>
 
 
-
-            <button v-else @click="closeEditPart" class="profile_content_change-button">Закрыть</button>
-
-            <div v-if="isOpenEditPart && profile">
-              <reset-password-form :profile-id="profile.id" />
-            </div>
           </div>
-
-          <p v-if="error">{{ error }}</p>
         </div>
       </div>
-    </div>
+
+
+
+
   </default-layout>
 </template>
 
-<style scoped>
-@import "@/assets/ProfileStyles/profile-styles.css";
-</style>
+<!--<style scoped>-->
+<!--@import "@/assets/ProfileStyles/profile-styles.css";-->
+<!--</style>-->
