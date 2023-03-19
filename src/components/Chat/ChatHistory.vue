@@ -1,13 +1,12 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
+import { computed, onUnmounted, ref, watch, watchEffect } from "vue";
+import ModalPopup from "@/components/ModalPopup.vue";
 import useUserProfile from "@/composables/useUserProfile.js";
 import { getFileUrl } from "@/lib/api/banner/banner.js";
 import { subscribeToDialog, unsubscribeFromDialog } from "@/lib/api/chat/history.js";
 import { getDialogHistory } from "@/lib/api/chat/dialog.js";
 import { group } from "@/lib/arrays.js";
-
-//import ChatMessageInput from "@/components/Chat/ChatMessageInput.vue";
-//import { getDialogHistory } from "@/lib/api/chat/dialog.js";
+import { findLinksInString, replaceLinksInString } from "@/lib/regex.js";
 
 const props = defineProps({
   dialogId: {
@@ -37,21 +36,6 @@ onUnmounted(() => {
   unsubscribeFromDialog(props.dialogId);
 });
 
-const message = ref("");
-const files = ref(null);
-
-const trySendMessage = () => {
-  sendMessage(message.value, files.value.files);
-  message.value = "";
-  files.value.type = "text";
-  files.value.type = "file";
-};
-
-// watchEffect(async () => {
-//  const [error, content] = await getDialogHistory(props.dialogId);
-//  if (!error) history.value = content;
-// });
-
 const formattedHistory = computed(() => {
   if (!history.value) return [];
   const groupedHistory = group(history.value, ({ createAt }) => createAt.split("T")[0]);
@@ -60,6 +44,27 @@ const formattedHistory = computed(() => {
 
 const user = useUserProfile();
 const messageStyleClass = ({ ownerId }) => (ownerId === user.id ? "my_splash" : "person_splash");
+
+const message = ref("");
+const askedToDeleteLinks = ref(false);
+const files = ref(null);
+
+const requestSendMessage = async (formattedMessage) => {
+  message.value = "";
+  askedToDeleteLinks.value = false;
+  sendMessage(formattedMessage, files.value?.files ?? []);
+  files.value.type = "text";
+  files.value.type = "file";
+};
+
+const trySendMessage = async () => {
+  if (message.value === "") return;
+  const hasLinks = findLinksInString(message.value);
+  if (hasLinks) askedToDeleteLinks.value = true;
+  else requestSendMessage(message.value);
+};  
+
+const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "(ссылка удалена)"));
 </script>
 
 <template>
@@ -135,11 +140,12 @@ const messageStyleClass = ({ ownerId }) => (ownerId === user.id ? "my_splash" : 
       </div>
     </div>
 
-    <!--    <div v-for="[date, messages] in formattedHistory" :key="date">-->
-    <!--      <p>{{ date }}</p>-->
-    <!--      <div v-for="message in messages" :key="message.id">Text: {{ message.text }}</div>-->
-    <!--    </div>-->
-    <!--    <chat-message-input :dialog-id="dialogId" @message-sent="addMessage" />-->
+     <modal-popup
+      :opened="askedToDeleteLinks"
+      @confirmed="requestSendMessage"
+      @rejected="requestSendMessage(messageWithoutLinks)"
+      message="Прикрепляя ссылку на сторонний ресурс вы полность несете ответственноть за любые возможные негативные последствия."
+    /> 
   </main>
 </template>
 
