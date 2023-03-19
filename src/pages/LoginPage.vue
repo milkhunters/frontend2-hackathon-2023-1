@@ -40,6 +40,6 @@ const trySignIn = async () => {
   </sign-form>
 </template>
 
-<style scoped>
-@import "@/assets/LoginStyles/sign-form.css";
-</style>
+<!--<style scoped>-->
+<!--@import "@/assets/LoginStyles/sign-form.css";-->
+<!--</style>-->

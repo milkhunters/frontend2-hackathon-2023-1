@@ -4,6 +4,7 @@
       <div class="footer_wrapper">
         <div class="footer_top">
           <div class="footer_left">
+            <img src="@/assets/img/milkyFooter.jpg">
             Все материалы, размещенные на сайте, являются авторскими. Копирование запрещено. Все права защищены. ООО «Рогатки и Корова»
           </div>
           <div class="footer_right">
@@ -21,6 +22,6 @@
   </footer>
 </template>
 
-<style scoped>
-@import "@/assets/FooterStyles/default-footer.css"
-</style>
+<!--<style scoped>-->
+<!--@import "@/assets/FooterStyles/default-footer.css"-->
+<!--</style>-->
