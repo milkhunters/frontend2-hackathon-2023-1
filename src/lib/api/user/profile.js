@@ -1,7 +1,7 @@
 import { encodeJson, makeReadRequest, makeWriteRequest, processApiResponse } from "../api";
 
 const API_CURRENT_USER_URL = "user/current";
-const API_UPDATE_PASSWORD_URL = "user/update_my_password";
+const API_UPDATE_PASSWORD_URL = "user/update_password";
 const API_UNREAD_COUNT_URL = "dialog/unread_count";
 const API_GET_URL= "user";
 

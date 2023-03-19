@@ -22,6 +22,6 @@
   </footer>
 </template>
 
-<!--<style scoped>-->
-<!--@import "@/assets/FooterStyles/default-footer.css"-->
-<!--</style>-->
+<style scoped>
+
+</style>
