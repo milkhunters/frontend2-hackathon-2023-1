@@ -15,6 +15,11 @@ const route = useRoute();
 
 const canSignOut = computed(() => !route.params.id);
 
+const watchable = computed(() => {
+  const watchingSelf = !route.params.id;
+  
+});
+
 const editable = computed(() => {
   const watchingSelf = !route.params.id;
   const loggedUserHasHigherRole = loggedUser.value?.role > watchedUser.value?.role;

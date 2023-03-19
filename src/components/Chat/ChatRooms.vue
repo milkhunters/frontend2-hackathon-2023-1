@@ -72,7 +72,7 @@ const goToProfile = (id) => router.push({ name: "profile", params: { id } });
             @click="selectDialog(dialog.id)"
           >
             <div class="chat_content">
-              <img :src="getFileUrl(dialog.avatarId)" @click="goToProfile(dialog.ownerId ?? dialog.id)" />
+              <img :src="getFileUrl(dialog.avatarId)" @click="goToProfile(dialog.companionId ?? dialog.id)" />
               <p class="chat_name">{{ dialog.title ?? dialog.firstName }}</p>
               <p class="chat_who">{{ dialog.department }}</p>
               <div class="chat_notify">{{ dialog.unreadCount ?? 0 }}</div>

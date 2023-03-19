@@ -22,7 +22,7 @@ watch(() => props.dialogId, async () => {
   const historyReversed = await getDialogHistory(props.dialogId);
   if (!historyReversed) return;
   historyReversed.forEach(({ id }) => markMessageAsRead(id));
-  history.value = historyReversed.reverse();
+  history.value = historyReversed.sort(({ updateAt: a }, { updateAt: b }) => Date.parse(a) < Date.parse(b));
 }, { immediate: true });
 
 let sendMessage;
@@ -116,7 +116,7 @@ const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "
               <path d="m9 18 3-3-3-3" />
             </svg>
           </label>
-          <input ref="files" id="file" name="file" type="file" multiple />
+          <input ref="files" id="file" name="file" type="file" hidden />
           <input v-model="message" type="text" placeholder="Введите сообщение" />
           <button @click="trySendMessage" class="text_input_send-button">
             <svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
