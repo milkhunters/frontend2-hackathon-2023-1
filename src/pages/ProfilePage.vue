@@ -89,7 +89,7 @@ const tryChangeAvatar = async () => {
               Редактировать профиль
             </button>
             <!-- Плашка с изменениями (открывать при нажатии на редактировать профиль) -->
-            <div :style="{ display: display }" id="profile_content_change">
+            <div :style="{ display }" id="profile_content_change">
               <div class="profile_change_item">
                 <p class="profile_change_item_title">Изменить аватарку</p>
                 <div class="profile_change_item_row">
@@ -108,7 +108,3 @@ const tryChangeAvatar = async () => {
     </div>
   </default-layout>
 </template>
-
-<!--<style scoped>-->
-<!--@import "@/assets/ProfileStyles/profile-styles.css";-->
-<!--</style>-->

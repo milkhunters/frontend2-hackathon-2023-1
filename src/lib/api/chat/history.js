@@ -29,7 +29,6 @@ export const subscribeToDialog = (id, callback) => {
         .map((r) => r.json()),
     );
     const data = { text, files: fileUuids.map((f) => f.value.message.id) };
-    console.log(data);
     connection.send(JSON.stringify(data));
   };
 };
