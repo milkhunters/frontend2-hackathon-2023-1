@@ -3,11 +3,15 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import { getBanners } from "@/lib/api/banner/banner.js";
 import { getFileUrl } from "@/lib/api/banner/banner.js";
 
-const products = ref(null);
+const products = ref([
+  {id: 1, url: "https://i.imgur.com/kBDvf9t.jpeg"},
+  {id: 2, url: "https://i.imgur.com/X3s8h7F.jpg"},
+  {id: 3, url: "https://i.imgur.com/D0CzaSe.jpeg"}
+]);
 
 onMounted(async () => {
-  const banners = await getBanners();
-  products.value = banners ?? [];
+  // const banners = await getBanners();
+  // products.value = banners ?? [];
   startInterval();
 });
 
@@ -47,7 +51,7 @@ onUnmounted(() => {
 <template>
   <section class="main_banner">
     <div class="container">
-      <img v-if="banner" :src="getFileUrl(banner)" alt="frame-selection" class="banner_img" />
+      <img v-if="banner" :src="banner.url" alt="frame-selection" class="banner_img" />
       <div class="banner_buttons">
         <button @click="goBack">
           <svg
