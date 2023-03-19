@@ -150,8 +150,8 @@ const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "
   </main>
 </template>
 
-<style scoped>
-@import "@/assets/ChatStyles/chats.css";
-@import "@/assets/HomeStyles/style.css";
-@import "@/assets/HeaderStyles/default-header.css";
-</style>
+<!--<style scoped>-->
+<!--@import "@/assets/ChatStyles/chats.css";-->
+<!--@import "@/assets/HomeStyles/style.css";-->
+<!--@import "@/assets/HeaderStyles/default-header.css";-->
+<!--</style>-->

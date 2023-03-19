@@ -32,6 +32,6 @@ const goToChat = () => router.push({ name: "chat" });
   </header>
 </template>
 
-<style scoped>
-@import "@/assets/HomeStyles/style.css";
-</style>
+<!--<style scoped>-->
+<!--@import "@/assets/HomeStyles/style.css";-->
+<!--</style>-->

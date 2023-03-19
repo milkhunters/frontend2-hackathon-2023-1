@@ -24,6 +24,6 @@ const changeDialog = (dialogId) => {
   </default-layout>
 </template>
 
- <style scoped>
- @import "@/assets/ChatStyles/chats.css";
- </style>
+<!-- <style scoped>-->
+<!-- @import "@/assets/ChatStyles/chats.css";-->
+<!-- </style>-->

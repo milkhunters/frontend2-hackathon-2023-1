@@ -11,6 +11,6 @@ import CompanyNews from "@/components/Home/CompanyNews.vue";
   </default-layout>
 </template>
 
-<style scoped>
-@import "@/assets/HomeStyles/base.css";
-</style>
+<!--<style scoped>-->
+<!--@import "@/assets/HomeStyles/base.css";-->
+<!--</style>-->

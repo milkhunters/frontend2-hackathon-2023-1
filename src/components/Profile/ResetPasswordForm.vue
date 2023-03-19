@@ -62,7 +62,7 @@ const tryResetPassword = async () => {
   </div>
 </template>
 
-<style scoped>
-@import "@/assets/ProfileStyles/profile-styles.css"
-</style>
+<!--<style scoped>-->
+<!--@import "@/assets/ProfileStyles/profile-styles.css"-->
+<!--</style>-->
 
