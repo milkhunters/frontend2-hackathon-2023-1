@@ -1,6 +1,6 @@
 const API_BASE_URL = "https://hack.milkhunters.ru/api/v1";
 
-const formatResponse = (data) => {
+export const formatResponse = (data) => {
   if (!data) return data;
   const entries = Object.entries(data);
   const formattedEntries = entries.map(([key, value]) => {
@@ -23,7 +23,7 @@ const makeRequest = async (url, method, headers, body) => {
       body,
       credentials: "include",
     });
-    if (!response.ok) return [(await response.json()), null];
+    if (!response.ok) return [await response.json(), null];
     return [null, response];
   } catch (error) {
     console.error(error);
@@ -40,7 +40,9 @@ export const encodeJson = (record) => {
 };
 
 export const encodeFile = (file) => {
-  return { headers: { "Content-Type": "multipart/form-data" }, body: file };
+  const formData = new FormData();
+  formData.append("file", file);
+  return { headers: {}, body: formData };
 };
 
 export const makeWriteRequest = async (apiUrl, options = encodeEmpty(), method = "POST") => {
@@ -58,4 +60,9 @@ const buildUrl = (apiUrl, record = {}) => {
 export const makeReadRequest = async (apiUrl, record) => {
   const url = buildUrl(apiUrl, record);
   return await makeRequest(url, "GET");
+};
+
+export const connect = (apiUrl) => {
+  const url = `wss://hack.milkhunters.ru/api/v1/${apiUrl}/ws`;
+  return new WebSocket(url);
 };

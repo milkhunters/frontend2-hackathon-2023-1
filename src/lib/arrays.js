@@ -7,3 +7,11 @@ export const group = (array, unwrap) => {
   }
   return result;
 };
+
+export const map = (array, f) => {
+  const result = [];
+  for (const x of array) {
+    result.push(f(x));
+  }
+  return result;
+};

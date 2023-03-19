@@ -17,7 +17,7 @@ const changeDialog = (dialogId) => {
       <div class="container">
         <div class="chats_wrapper">
           <chat-rooms @dialog-selected="changeDialog" />
-          <chat-history  />
+          <chat-history v-if="currentDialog" :dialog-id="currentDialog" />
       </div>
       </div>
     </main>
