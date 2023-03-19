@@ -24,6 +24,12 @@ const editable = computed(() => {
 
 const error = ref(null);
 
+const isOpenEditPart = ref(false);
+
+const openEditPart = () => isOpenEditPart.value = true
+
+const closeEditPart = () => isOpenEditPart.value = false
+
 watch(
   () => route.params.id,
   () => (error.value = null),
@@ -55,27 +61,53 @@ const tryChangeAvatar = async () => {
     // TODO: update image.
   }
 };
+
 </script>
 
 <template>
   <default-layout>
-    <div v-if="profile">
-      <p>
-        <img :src="profile.avatar_id" alt="user-avatar" />
-        <input ref="files" type="file" />
-        <button @click="tryChangeAvatar">Изменить аватарку</button>
-      </p>
-      <p>ФИО - {{ profile.lastName }} {{ profile.firstName }} {{ profile.patronymic }}</p>
-      <p>Отдел - {{ profile.department }}</p>
-      <p>Должность - {{ profile.jobTitle }}</p>
-      <p>Уровень Доступа - {{ roleDescription(profile.role) }}</p>
-      <button v-if="canSignOut" @click="trySignOut">Выйти</button>
+    <body>
+    <div v-if="profile" class="profile">
+      <div class="container">
+
+        <div class="profile_content_img">
+          <img src="@/assets/img/UserAvatar.jpg" alt="logo-user">
+          <button v-if="canSignOut" @click="trySignOut">Выйти</button>
+        </div>
+
+        <div  class="profile_content">
+          <h2 class="profile_content_name">{{ profile.lastName }} {{ profile.firstName }} {{ profile.patronymic }}</h2>
+          <p class="profile_content_place"><span>Место:</span><br> {{ profile.department }}</p>
+          <p class="profile_content_dolg"><span>Должность:</span><br> {{ profile.jobTitle }}</p>
+
+          <button class="profile_content_change-button" @click="openEditPart">Редактировать профиль</button>
+
+          <div  class="profile_content_change">
+
+            <div class="profile_change_item">
+              <p class="profile_change_item_title">Изменить аватарку</p>
+              <div class="profile_change_item_row">
+                <input id="file_img" ref="files" type="file" />
+                <button @click="tryChangeAvatar" >Изменить аватарку</button>
+              </div>
+            </div>
+
+            <div v-if="editable && profile">
+              <reset-password-form :profile-id="profile.id" />
+            </div>
+
+          </div>
+
+          <p v-if="error">{{ error }}</p>
+
+        </div>
+      </div>
     </div>
 
-    <div v-if="editable && profile">
-      <reset-password-form :profile-id="profile.id" />
-    </div>
-
-    <p v-if="error">{{ error }}</p>
+    </body>
   </default-layout>
 </template>
+
+<style scoped>
+@import "@/assets/ProfileStyles/profile-styles.css"
+</style>

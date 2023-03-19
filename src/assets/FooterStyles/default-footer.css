@@ -1,6 +1,6 @@
 .footer {
     background: var(--container-color);
-    padding: 40px 0 30px;
+    padding: 40px 30px 40px;
     box-shadow: var(--shadow-small-content);
 }
 .footer_top {
