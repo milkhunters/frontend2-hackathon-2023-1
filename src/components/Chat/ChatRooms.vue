@@ -84,11 +84,9 @@ const goToProfile = (id) => router.push({ name: "profile", params: { id } });
   </div>
 </template>
 
-<!--<style scoped>-->
-<!--@import "@/assets/ChatStyles/chats.css";-->
-
-<!--img {-->
-<!--  width: 1rem;-->
-<!--  height: 1rem;-->
-<!--}-->
-<!--</style>-->
+<style scoped>
+img {
+  width: 1rem;
+  height: 1rem;
+}
+</style>
