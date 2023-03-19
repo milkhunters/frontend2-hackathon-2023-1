@@ -5,6 +5,7 @@ import useUserProfile from "@/composables/useUserProfile.js";
 import { getFileUrl } from "@/lib/api/banner/banner.js";
 import { subscribeToDialog, unsubscribeFromDialog } from "@/lib/api/chat/history.js";
 import { getDialogHistory } from "@/lib/api/chat/dialog.js";
+import { markMessageAsRead } from "@/lib/api/chat/message.js";
 import { group } from "@/lib/arrays.js";
 import { findLinksInString, replaceLinksInString } from "@/lib/regex.js";
 
@@ -19,8 +20,9 @@ const history = ref([]);
 
 watch(() => props.dialogId, async () => {
   const historyReversed = await getDialogHistory(props.dialogId);
-  history.value = historyReversed ? historyReversed.reverse() : [];
-  console.log(history.value)
+  if (!historyReversed) return;
+  historyReversed.forEach(({ id }) => markMessageAsRead(id));
+  history.value = historyReversed.reverse();
 }, { immediate: true });
 
 let sendMessage;
