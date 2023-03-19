@@ -2,6 +2,7 @@ const API_BASE_URL = "https://hack.milkhunters.ru/api/v1";
 
 export const formatResponse = (data) => {
   if (!data) return data;
+  if (Array.isArray(data)) return data.map((x) => formatResponse(x));
   const entries = Object.entries(data);
   const formattedEntries = entries.map(([key, value]) => {
     const [leave, ...toFormat] = key.split("_");

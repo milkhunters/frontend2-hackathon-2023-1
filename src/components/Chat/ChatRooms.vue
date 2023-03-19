@@ -67,7 +67,7 @@ const goToProfile = (id) => router.push({ name: "profile", params: { id } });
             v-for="dialog in dialogs"
             :key="dialog.id"
             class="chat"
-            @click.stop="selectDialog(dialog.id)"
+            @click="selectDialog(dialog.id)"
           >
             <div class="chat_content">
               <img :src="getFileUrl(dialog.avatarId)" @click="goToProfile(dialog.ownerId ?? dialog.id)" />

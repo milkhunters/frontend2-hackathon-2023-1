@@ -1,4 +1,4 @@
-import { encodeJson, formatResponse, makeReadRequest, makeWriteRequest } from "../api";
+import { formatResponse, makeReadRequest } from "../api";
 
 const API_DIALOGS_URL = "dialog/list";
 const API_USERS_URL = "user/list";
@@ -25,5 +25,5 @@ export const getAllUsers = async () => {
 };
 
 export const openDialog = (userId) => {
-  return makeWriteRequest(API_OPENDIALOG_URL, encodeJson({ user_id: userId })); 
+  return makeReadRequest(API_OPENDIALOG_URL, { user_id: userId }); 
 };
