@@ -3,7 +3,7 @@ import { ref } from "vue";
 import useFormError from "@/composables/useFormError.js";
 import { resetPassword } from "@/lib/api/user/profile.js";
 
-const props = defineProps({
+defineProps({
   profileId: {
     type: String,
     required: true,

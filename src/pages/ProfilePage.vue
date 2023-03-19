@@ -5,7 +5,6 @@ import useUserProfile from "@/composables/useUserProfile.js";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import ResetPasswordForm from "@/components/Profile/ResetPasswordForm.vue";
 import signOut from "@/lib/api/auth/signOut.js";
-import { roleDescription } from "@/lib/api/user/formatters.js";
 import { getUserProfileInfo, changeAvatar } from "@/lib/api/user/profile.js";
 
 const loggedUser = useUserProfile();
@@ -18,17 +17,15 @@ const canSignOut = computed(() => !route.params.id);
 
 const editable = computed(() => {
   const watchingSelf = !route.params.id;
-  const loggedUserHasHigherRole = loggedUser.value?.role === 5 && watchedUser.value?.role !== 5;
+  const loggedUserHasHigherRole = loggedUser.value?.role > watchedUser.value?.role;
   return watchingSelf || loggedUserHasHigherRole;
 });
 
-const error = ref(null);
-
 const isOpenEditPart = ref(false);
+const openEditPart = () => (isOpenEditPart.value = true);
+const closeEditPart = () => (isOpenEditPart.value = false);
 
-const openEditPart = () => isOpenEditPart.value = true
-
-const closeEditPart = () => isOpenEditPart.value = false
+const error = ref(null);
 
 watch(
   () => route.params.id,
@@ -46,44 +43,44 @@ watchEffect(async () => {
 const router = useRouter();
 
 const trySignOut = async () => {
-  const [errors] = await signOut();
-  if (!errors) router.push({ name: "login" });
+  await signOut();
+  router.push({ name: "login" });
 };
 
 const files = ref(null);
 
 const tryChangeAvatar = async () => {
-  const [errors, content] = await changeAvatar(files.value?.files[0]);
-  if (errors) {
-    error.value = errors;
-  } else {
-    error.value = null;
-    // TODO: update image.
-  }
+  const file = files.value?.files[0];
+  if (!file) return;
+  const [errors, _] = await changeAvatar(file);
+  if (errors) error.value = errors;
+  else error.value = null;
 };
-
 </script>
 
 <template>
   <default-layout>
-    <body>
     <div v-if="profile" class="profile">
       <div class="container">
-
         <div class="profile_content_img">
-          <img src="@/assets/img/UserAvatar.jpg" alt="logo-user">
+          <img src="@/assets/img/UserAvatar.jpg" alt="logo-user" />
           <button v-if="canSignOut" @click="trySignOut">Выйти</button>
         </div>
 
-        <div  class="profile_content">
-          <h2 class="profile_content_name">{{ profile.lastName }} {{ profile.firstName }} {{ profile.patronymic }}</h2>
-          <p class="profile_content_place"><span>Место:</span><br> {{ profile.department }}</p>
-          <p class="profile_content_dolg"><span>Должность:</span><br> {{ profile.jobTitle }}</p>
+        <div class="profile_content">
+          <h2 class="profile_content_name">
+            {{ profile.lastName }} {{ profile.firstName }} {{ profile.patronymic }}
+          </h2>
+          <p class="profile_content_place">
+            <span>Место:</span><br />
+            {{ profile.department }}
+          </p>
+          <p class="profile_content_dolg">
+            <span>Должность:</span><br />
+            {{ profile.jobTitle }}
+          </p>
 
-          <button class="profile_content_change-button" @click="openEditPart">Редактировать профиль</button>
-
-          <div  class="profile_content_change">
-
+          <div v-if="editable" class="profile_content_change">
             <div class="profile_change_item">
               <p class="profile_change_item_title">Изменить аватарку</p>
               <div class="profile_change_item_row">
@@ -92,24 +89,28 @@ const tryChangeAvatar = async () => {
               </div>
             </div>
 
-            <div v-if="editable && profile">
+            <button
+              v-if="!isOpenEditPart"
+              @click="openEditPart"
+              class="profile_content_change-button"
+            >
+              Редактировать профиль
+            </button>
+
+            <button v-else @click="closeEditPart" class="profile_content_change-button">Закрыть</button>
+
+            <div v-if="isOpenEditPart && profile">
               <reset-password-form :profile-id="profile.id" />
             </div>
           </div>
 
           <p v-if="error">{{ error }}</p>
-
         </div>
       </div>
     </div>
-    </body>
   </default-layout>
 </template>
 
 <style scoped>
 @import "@/assets/ProfileStyles/profile-styles.css";
-
-body {
-  height: 100vh;
-}
 </style>
