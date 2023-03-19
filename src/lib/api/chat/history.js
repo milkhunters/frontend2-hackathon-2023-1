@@ -13,14 +13,23 @@ export const subscribeToDialog = (id, callback) => {
 
   connection.addEventListener("close", (event) => callback(event.reason, null));
   connection.addEventListener("error", (error) => console.error(error));
-  connection.addEventListener("message", (event) => callback(null, formatResponse(JSON.parse(event.data))));
+  connection.addEventListener("message", (event) => {
+    console.log("Got: ", event);
+    callback(null, formatResponse(JSON.parse(event.data)));
+  });
 
   subscriptions.set(id, connection);
 
   return async (text, files) => {
     const fileIds = await Promise.allSettled(map(files, (f) => saveFile(f)));
-    const fileUuids = await Promise.allSettled(fileIds.map((f) => f.value[1]).map(r => r.json()))
-    const data = { text, files: fileUuids.map(f => f.value.message.id) };
+    const fileUuids = await Promise.allSettled(
+      fileIds
+        .filter((f) => f)
+        .map((f) => f.value[1])
+        .map((r) => r.json()),
+    );
+    const data = { text, files: fileUuids.map((f) => f.value.message.id) };
+    console.log(data);
     connection.send(JSON.stringify(data));
   };
 };

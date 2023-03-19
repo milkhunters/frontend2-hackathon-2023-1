@@ -18,8 +18,8 @@ const props = defineProps({
 const history = ref([]);
 
 watch(() => props.dialogId, async () => {
-  history.value = await getDialogHistory(props.dialogId);
-  console.log(history.value);
+  const historyReversed = await getDialogHistory(props.dialogId);
+  history.value = historyReversed ? historyReversed.reverse() : [];
 }, { immediate: true });
 
 let sendMessage;
@@ -54,8 +54,7 @@ const requestSendMessage = async (formattedMessage) => {
   message.value = "";
   askedToDeleteLinks.value = false;
   sendMessage(formattedMessage, files.value?.files ?? []);
-  files.value.type = "text";
-  files.value.type = "file";
+  files.value.value = "";
 };
 
 const trySendMessage = async () => {
@@ -77,7 +76,7 @@ const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "
           <div
             v-for="message in messages"
             :key="message.id"
-            class="chat_message_splash my_splash"
+            class="chat_message_splash"
             :class="messageStyleClass(message)"
           >
             <p class="splash_name">{{ message.firstName }}</p>
@@ -87,7 +86,7 @@ const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "
                 v-for="file in message.files" 
                 :key="file.title" 
               >
-                <a :href="getFileUrl(file.fileId)" download>{{ file.title }}</a>
+                <a :href="getFileUrl(file.file_id)" download>{{ file.title }}</a>
               </div>
             </p>
             <p class="splash_date">{{ message.createdAt }}</p>
@@ -114,7 +113,7 @@ const messageWithoutLinks = computed(() => replaceLinksInString(message.value, "
               <path d="m9 18 3-3-3-3" />
             </svg>
           </label>
-          <input ref="files" id="file" name="file" type="file" multiple hidden />
+          <input ref="files" id="file" name="file" type="file" multiple />
           <input v-model="message" type="text" placeholder="Введите сообщение" />
           <button @click="trySendMessage" class="text_input_send-button">
             <svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

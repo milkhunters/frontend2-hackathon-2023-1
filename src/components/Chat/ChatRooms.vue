@@ -34,11 +34,13 @@ const filteredDialogs = computed(() => {
       return field.toLowerCase().includes(filter.value.toLowerCase());
     });
   const filteredByName = filterByProp("firstName");
-  const filteredByDepartment = filterByProp("departament").filter(
-    (dialog) => !filteredByName.includes(dialog),
+  const filteredByLastName = filterByProp("lastName");
+  const filteredByFullName = [...filteredByName, ...filteredByLastName.filter((d) => !filteredByName.includes(d))];
+  const filteredByDepartment = filterByProp("department").filter(
+    (dialog) => !filteredByFullName.includes(dialog),
   );
 
-  return { "По ФИО:": filteredByName, "По отделу:": filteredByDepartment };
+  return { "По ФИО:": filteredByFullName, "По отделу:": filteredByDepartment };
 });
 
 const selectDialog = async (dialogId) => {
