@@ -36,6 +36,7 @@ watchEffect(async () => {
   const id = route.params.id;
   if (!id) return;
   const [errors, watchedUserInfo] = await getUserProfileInfo(id);
+  console.log(watchedUserInfo)
   if (errors) error.value = errors;
   else watchedUser.value = watchedUserInfo;
 });
@@ -49,6 +50,13 @@ const trySignOut = async () => {
 
 const files = ref(null);
 
+const goToProfile = async () => {
+  document.getElementById("profile_content_change").style.display = "none"
+}
+
+const goToOptions = async () => {
+  document.getElementById("profile_content_change").style.display = "initial"
+}
 const tryChangeAvatar = async () => {
   const file = files.value?.files[0];
   if (!file) return;
@@ -60,6 +68,7 @@ const tryChangeAvatar = async () => {
 
 <template>
   <default-layout>
+
     <div v-if="profile" class="profile">
       <div class="container">
         <div class="profile_content_img">
@@ -80,7 +89,14 @@ const tryChangeAvatar = async () => {
             {{ profile.jobTitle }}
           </p>
 
-          <div v-if="editable" class="profile_content_change">
+          <button
+              v-if="!isOpenEditPart"
+              @click="goToOptions"
+              class="profile_content_change-button"
+          >
+            Настройки
+          </button>
+          <div v-if="editable" id="profile_content_change">
             <div class="profile_change_item">
               <p class="profile_change_item_title">Изменить аватарку</p>
               <div class="profile_change_item_row">
@@ -90,12 +106,22 @@ const tryChangeAvatar = async () => {
             </div>
 
             <button
+                v-if="!isOpenEditPart"
+                @click="goToProfile"
+                class="profile_content_change-button"
+            >
+              Профиль
+            </button>
+
+            <button
               v-if="!isOpenEditPart"
               @click="openEditPart"
               class="profile_content_change-button"
             >
               Редактировать профиль
             </button>
+
+
 
             <button v-else @click="closeEditPart" class="profile_content_change-button">Закрыть</button>
 
