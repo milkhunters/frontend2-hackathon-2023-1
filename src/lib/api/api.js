@@ -11,8 +11,8 @@ export const formatResponse = (data) => {
   return Object.fromEntries(formattedEntries);
 };
 
-export const processApiResponse = (response) => {
-  return response.error ? [response.error.content, null] : [null, formatResponse(response.message)];
+export const processApiResponse = (response, error) => {
+  return error ? [error.content.map(x => x.message).join("\n"), null] : [null, formatResponse(response.message)];
 };
 
 const makeRequest = async (url, method, headers, body) => {

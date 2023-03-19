@@ -15,9 +15,6 @@
           </div>
         </div>
         <div class="footer_bottom">
-          <p>
-            WebPractik - корпоративный чат <br>
-            © 2018-2023 webpractik.ru</p>
         </div>
       </div>
     </div>

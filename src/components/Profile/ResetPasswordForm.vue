@@ -33,17 +33,36 @@ const tryResetPassword = async () => {
     return;
   }
 
-  const [errors] = await resetPassword(props.profileId);
+  const [errors] = await resetPassword(currentPassword.value, newPassword.value);
   if (errors) setError(errors);
   else setSuccess("Пароль изменен.");
 };
 </script>
 
 <template>
-  <input v-model="currentPassword" type="password" />
-  <input v-model="newPassword" type="password" />
-  <input v-model="newPasswordRepeated" type="password" />
-  <p>{{ error }}</p>
-  <p>{{ success }}</p>
-  <button @click="tryResetPassword">Reset</button>
+  <div class="profile_change_item profile_change_item-pass">
+    <p class="profile_change_item_title">Изменить пароль</p>
+    <div class="profile_change_item_col">
+
+      <label for="pass">Введите пароль</label>
+      <input v-model="currentPassword" type="password" />
+
+      <label for="passconfirm">Введите новый пароль</label>
+      <input v-model="newPassword" type="password" name="passconfirm" />
+
+      <label for="passconfirm">Подтвердить новый пароль</label>
+      <input v-model="newPasswordRepeated" type="password" name="passconfirm" />
+
+      <button @click="tryResetPassword">Поменять пароль</button>
+
+      <p>{{ error }}</p>
+      <p>{{ success }}</p>
+
+    </div>
+  </div>
 </template>
+
+<style scoped>
+@import "@/assets/ProfileStyles/profile-styles.css"
+</style>
+

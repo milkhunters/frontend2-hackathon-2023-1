@@ -1,35 +1,63 @@
-# hack-front
+# Frontend часть прокта
 
-This template should help get you started developing with Vue 3 in Vite.
+Данный проект предназначен для решения кейса
+**Часть корпоративного портала для предприятия закрытого
+типа** от Вебпрактик
 
-## Recommended IDE Setup
+## Демо
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Демонстранция доступна на [https://hack.milkhunters.ru/](https://hack.milkhunters.ru/)
 
-## Customize configuration
+*Реквизиты для входу можно [посмотреть здесь](https://github.com/milkhunters/backend-hackathon-2023-1#%D0%B4%D0%B5%D0%BC%D0%BE)*
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Backend
 
-## Project Setup
+Реализацию backend части можно найти в первом репозитории.
 
-```sh
+Взаимодействие между фронтом и бэком происходит по REST API.
+
+## Запуск
+
+Для запуска необходим запущенное приложение бэкенда.
+
+Необходимо будет отредактировать адрес бэкенда в файле
+`/src/lib/api/api.js`
+
+### Локально
+
+#### Установка зависимостей 
+
+```shell
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+#### Запуск Dev
 
-```sh
+```shell
 npm run dev
 ```
 
-### Compile and Minify for Production
+#### Сборка для прода
 
-```sh
+```shell
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Докер
 
-```sh
-npm run lint
+#### Build
+
+```shell
+docker build -t milk-front .
 ```
+
+#### Запуск
+
+```shell
+docker run -p 9000:80 milk-front
+```
+
+## Архитектура и технологии
+
+- [Vue.js](https://vuejs.org/) + [Vite](https://vitejs.dev/)
+- Голый CSS

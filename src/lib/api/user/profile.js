@@ -1,7 +1,8 @@
-import { makeReadRequest, processApiResponse } from "../api";
+import { encodeJson, makeReadRequest, makeWriteRequest, processApiResponse } from "../api";
 
 const API_CURRENT_USER_URL = "user/current";
 const API_UNREAD_COUNT_URL = "dialog/unread_count";
+const API_UPDATE_PASSWORD_URL = "user/update_my_password";
 
 export const getCurrentUserProfileInfo = async () => {
   const [error, response] = await makeReadRequest(API_CURRENT_USER_URL);
@@ -19,10 +20,14 @@ export const getUnreadMessagesCount = async () => {
   return data.message;
 };
 
-export const resetPassword = async (userId) => {
-  return ["Неверный пароль.", null];
+export const resetPassword = async (oldPassword, newPassword) => {
+  const body = { old_password: oldPassword, new_password: newPassword };
+  const [error, response] = await makeWriteRequest(API_UPDATE_PASSWORD_URL, encodeJson(body));
+  const data = response ? await response.json() : null;
+  console.log(error, data)
+  return processApiResponse(data, error.error);
 };
 
 export const changeAvatar = async (file) => {
-  return [null, null] 
+  return [null, null]
 };
