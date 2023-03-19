@@ -14,7 +14,6 @@ export const subscribeToDialog = (id, callback) => {
   connection.addEventListener("close", (event) => callback(event.reason, null));
   connection.addEventListener("error", (error) => console.error(error));
   connection.addEventListener("message", (event) => {
-    console.log("Got: ", event);
     callback(null, formatResponse(JSON.parse(event.data)));
   });
 

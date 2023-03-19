@@ -38,7 +38,6 @@ watchEffect(async () => {
   const id = route.params.id;
   if (!id) return;
   const [errors, watchedUserInfo] = await getUserProfileInfo(id);
-  console.log(error, watchedUserInfo);
   if (errors) error.value = errors;
   else watchedUser.value = watchedUserInfo;
 });

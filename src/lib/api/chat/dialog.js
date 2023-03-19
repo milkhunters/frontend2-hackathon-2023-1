@@ -15,7 +15,6 @@ export const getAllDialogs = async () => {
 export const getDialogHistory = async (dialogId) => {
   const [_, messages] = await makeReadRequest(getDialogHistoryUrl(dialogId));
   const data = await messages.json();
-  console.log(data)
   return formatResponse(data.message);
 };
 
