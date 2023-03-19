@@ -9,5 +9,5 @@ export const getBanners = async () => {
   const [error, response] = await makeReadRequest(API_BANNERS_URL);
   if (error) return [error, null];
   const bannersIds = await response.json().then(processApiResponse);
-  return Object.values(bannersIds[1]).map(({ file_id }) => getFileUrl(file_id));
+  return bannersIds[1].map(({ fileId }) => fileId);
 };

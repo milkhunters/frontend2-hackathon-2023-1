@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { getBanners } from "@/lib/api/banner/banner.js";
+import { getFileUrl } from "@/lib/api/banner/banner.js";
 
 const products = ref(null);
 
@@ -46,7 +47,7 @@ onUnmounted(() => {
 <template>
   <section class="main_banner">
     <div class="container">
-      <img v-if="banner" :src="banner" alt="frame-selection" class="banner_img" />
+      <img v-if="banner" :src="getFileUrl(banner)" alt="frame-selection" class="banner_img" />
       <div class="banner_buttons">
         <button @click="goBack">
           <svg
