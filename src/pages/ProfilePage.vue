@@ -88,7 +88,7 @@ const tryChangeAvatar = async () => {
               <p class="profile_change_item_title">Изменить аватарку</p>
               <div class="profile_change_item_row">
                 <input id="file_img" ref="files" type="file" />
-                <button @click="tryChangeAvatar" >Изменить аватарку</button>
+                <button @click="tryChangeAvatar">Изменить аватарку</button>
               </div>
             </div>
 

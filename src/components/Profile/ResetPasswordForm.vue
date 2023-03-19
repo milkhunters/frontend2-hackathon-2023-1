@@ -47,10 +47,10 @@ const tryResetPassword = async () => {
       <label for="pass">Введите пароль</label>
       <input v-model="currentPassword" type="password" />
 
-      <label for="passconfirm">Подтвердить пароль</label>
+      <label for="passconfirm">Введите новый пароль</label>
       <input v-model="newPassword" type="password" name="passconfirm" />
 
-      <label for="passconfirm">Подтвердить пароль</label>
+      <label for="passconfirm">Подтвердить новый пароль</label>
       <input v-model="newPasswordRepeated" type="password" name="passconfirm" />
 
       <button @click="tryResetPassword">Поменять пароль</button>
