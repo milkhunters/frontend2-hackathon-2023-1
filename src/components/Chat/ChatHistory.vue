@@ -19,7 +19,8 @@ const history = ref([]);
 
 watch(() => props.dialogId, async () => {
   history.value = await getDialogHistory(props.dialogId);
-});
+  console.log(history.value);
+}, { immediate: true });
 
 let sendMessage;
 
