@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const isFull = ref(false);
-const minifiedBody = computed(() => props.body.slice(0, 80));
+const minifiedBody = computed(() => props.text.slice(0, 80));
 const open = () => isFull.value = true;
 const close = () => isFull.value = false
 </script>
