@@ -11,7 +11,9 @@ export const getCurrentUserProfileInfo = async () => {
 };
 
 export const getUserProfileInfo = async (userId) => {
-  return [null, { id: "123", email: "other@mail.ru", firstName: "otherUser", role: 3 }];
+  const [error, response] = await makeReadRequest(`user/${userId}`);
+  if (error) return [error, null];
+  return await response.json().then(processApiResponse);
 };
 
 export const getUnreadMessagesCount = async () => {

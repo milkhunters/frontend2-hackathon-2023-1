@@ -21,7 +21,8 @@ export const subscribeToDialog = (id, callback) => {
   subscriptions.set(id, connection);
 
   return async (text, files) => {
-    const fileIds = await Promise.allSettled(map(files, (f) => saveFile(f)));
+    const fs = map(files, (x) => x).filter((x) => !!x);
+    const fileIds = await Promise.allSettled(map(fs, (f) => saveFile(f)));
     const fileUuids = await Promise.allSettled(
       fileIds
         .filter((f) => f)

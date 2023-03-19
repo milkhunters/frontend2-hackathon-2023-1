@@ -20,6 +20,7 @@ const history = ref([]);
 watch(() => props.dialogId, async () => {
   const historyReversed = await getDialogHistory(props.dialogId);
   history.value = historyReversed ? historyReversed.reverse() : [];
+  console.log(history.value)
 }, { immediate: true });
 
 let sendMessage;
