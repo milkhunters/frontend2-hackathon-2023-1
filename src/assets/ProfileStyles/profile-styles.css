@@ -75,11 +75,11 @@ body {
     background: var(--color-primary);
     border: 2px solid var(--color-primary);
 }
-.profile_content_change {
+#profile_content_change {
     height: 100%;
     width: 100%;
     position: absolute;
-    display: initial; /*поставить display initial, чтобы показать*/
+    display: none; /*поставить display initial, чтобы показать*/
     padding: 0 20px 20px;
     overflow-y: auto;
     border-radius: 20px;
@@ -128,4 +128,64 @@ body {
 }
 .profile_change_item-pass button {
     margin-top: 12px;
+}
+@media screen and (max-width: 600px) {
+    .banner_img {
+        min-height: 200px;
+    }
+    .news_wrapper {
+        flex-direction: column;
+    }
+    .news {
+        width: fit-content;
+    }
+    .news_desc {
+        -webkit-line-clamp: 4;
+    }
+    .footer_top {
+        flex-direction: column;
+    }
+    .footer_left {
+        padding-right: 0;
+        justify-content: center;
+        text-align: center;
+    }
+    .footer_left img {
+        margin: 0 auto 20px;
+    }
+    .footer_right {
+        padding-top: 20px;
+        text-align: center;
+    }
+    .footer_bottom {
+        margin-top: 20px;
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+    }
+    .profile .container {
+        flex-direction: column;
+    }
+    .profile_content_img {
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    .profile_content {
+        width: 100%;
+        margin-top: 30px;
+        text-align: center;
+    }
+    .profile_content_name {
+        margin-top: 0;
+    }
+    .profile_change_item_row {
+        flex-direction: column;
+        align-items: baseline;
+    }
+    .profile_change_item_row button {
+        margin-top: 12px;
+    }
+    .profile_change_item_title {
+        text-align: left;
+    }
 }
