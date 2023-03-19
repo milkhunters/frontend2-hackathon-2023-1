@@ -22,7 +22,7 @@ watch(() => props.dialogId, async () => {
   const historyReversed = await getDialogHistory(props.dialogId);
   if (!historyReversed) return;
   historyReversed.forEach(({ id }) => markMessageAsRead(id));
-  history.value = historyReversed.sort(({ updateAt: a }, { updateAt: b }) => Date.parse(a) < Date.parse(b));
+  history.value = historyReversed.sort(({ createAt: a }, { createAt: b }) => Date.parse(a) < Date.parse(b));
 }, { immediate: true });
 
 let sendMessage;
